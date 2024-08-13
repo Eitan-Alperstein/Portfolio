@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            height: 100%;
+        }
+        
+        .neon {
+            animation: neonAnim 2s alternate-reverse infinite;
+            color: #04FF00;
+        }
+        
+        @keyframes neonAnim {
+            from {
+                text-shadow: 0 0 19px rgba(4, 255, 0, .7), 0 0 49px rgba(4, 255, 0, .7), 0 0 109px rgba(4, 255, 0, .7);
+            }
+            to {
+                text-shadow: 0 0 14px rgba(4, 255, 0, .7), 0 0 29px rgba(4, 255, 0, .7), 0 0 69px rgba(4, 255, 0, .7);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-500">
+    <div id="slide" class="bg-gray-100 h-dvh flex items-center justify-center">
+        <h1 id="name" class="text-3xl font-bold transition-all duration-700">
+            Eitan Alperstein
+        </h1>
+    </div>
+    <script>
+        let lastKnownScrollPosition = 0;
+        let ticking = false;
+        let scrollPosition = 0;
+        const timer = ms => new Promise(res => setTimeout(res, ms));
+
+        function doSomething(scrollPos) {
+            document.title = Math.round(scrollPos) + "px"
+            scrollPosition = scrollPos
+
+            if (scrollPos > 50) {
+                removeClass("name", "rotate-0")
+                addClass("name", "rotate-12")
+            } else {
+
+                removeClass("name", "rotate-12")
+                addClass("name", "rotate-0")
+            }
+        }
+
+        document.addEventListener("scroll", (event) => {
+            lastKnownScrollPosition = window.scrollY;
+
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    doSomething(lastKnownScrollPosition);
+                    ticking = false;
+                });
+
+                ticking = true;
+            }
+        });
+
+        function addClass(name, className = "") {
+            document.querySelector("#" + name).classList.add(className)
+        }
+
+        function removeClass(name, className = "") {
+            document.querySelector("#" + name).classList.remove(className)
+        }
+
+        window.addEventListener("load", () => {
+            (async function() {
+                await timer("1000")
+                removeClass("slide", "bg-gray-200")
+                addClass("slide", "bg-gray-900")
+                await timer("800")
+                addClass("name", "neon")
+            }())
+        })
+    </script>
+</body>
+
+</html>
