@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eitan Alperstein</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,12 +19,16 @@
     </script>
     <style>
         body {
-            height: 100%;
+            height: 110%;
         }
         
         .neon {
             animation: neonAnim 2s alternate-reverse infinite;
             color: #04FF00;
+        }
+
+        .hidden {
+            visibility: none;
         }
         
         @keyframes neonAnim {
@@ -43,6 +48,10 @@
             Eitan Alperstein
         </h1>
     </div>
+    
+    <p class="hidden" id="construction" style="color:whitesmoke;text-align:center">
+        (Site is under contruction. Please come back later!)
+    </p>
     <script>
         let lastKnownScrollPosition = 0;
         let ticking = false;
@@ -86,14 +95,21 @@
 
         window.addEventListener("load", () => {
             (async function() {
-                await timer("1000")
+                await timer("800")
                 removeClass("slide", "bg-gray-200")
                 addClass("slide", "bg-gray-900")
                 await timer("800")
                 addClass("name", "neon")
+                await timer("800")
+                removeClass("construction", "hidden")
             }())
         })
     </script>
+    <!-- 
+    <footer>
+        <table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td style="vertical-align: middle;"><h2 color="#146C94" class="name__NameContainer-sc-1m457h3-0 fDJBkJ" style="margin: 0px; font-size: 18px; color: rgb(20, 108, 148); font-weight: 600;"><span>Eitan</span><span>&nbsp;</span><span>Alperstein</span></h2><p color="#146C94" font-size="medium" class="job-title__Container-sc-1hmtp73-0 eVBSPG" style="margin: 0px; color: rgb(20, 108, 148); font-size: 14px; line-height: 22px;"><span>Lead Developer,</span></p><p color="#146C94" font-size="medium" class="company-details__CompanyContainer-sc-j5pyy8-0 kPrOBw" style="margin: 0px; font-weight: 500; color: rgb(20, 108, 148); font-size: 14px; line-height: 22px;"><span>The Paw</span></p></td><td width="30"><div style="width: 30px;"></div></td><td color="#19A7Ce" direction="vertical" width="1" height="auto" class="color-divider__Divider-sc-1h38qjv-0 jmHABg" style="width: 1px; border-bottom: none; border-left: 1px solid rgb(25, 167, 206);"></td><td width="30"><div style="width: 30px;"></div></td><td style="vertical-align: middle;"><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr height="25" style="vertical-align: middle;"><td width="30" style="vertical-align: middle;"><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td style="vertical-align: bottom;"><span color="#19A7Ce" width="11" class="contact-info__IconWrapper-sc-mmkjr6-1 KxJwQ" style="display: inline-block; background-color: rgb(25, 167, 206);"><img src="https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png" color="#19A7Ce" alt="mobilePhone" width="13" class="contact-info__ContactLabelIcon-sc-mmkjr6-0 bOaORQ" style="display: block; background-color: rgb(25, 167, 206);"></span></td></tr></tbody></table></td><td style="padding: 0px; color: rgb(20, 108, 148);"><a href="tel:(720)-659-8753" color="#146C94" font-size="medium" class="contact-info__ExternalLink-sc-mmkjr6-2 djHrwm" style="text-decoration: none; color: rgb(20, 108, 148); font-size: 14px;"><span>(720)-659-8753</span></a></td></tr><tr height="25" style="vertical-align: middle;"><td width="30" style="vertical-align: middle;"><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td style="vertical-align: bottom;"><span color="#19A7Ce" width="11" class="contact-info__IconWrapper-sc-mmkjr6-1 KxJwQ" style="display: inline-block; background-color: rgb(25, 167, 206);"><img src="https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png" color="#19A7Ce" alt="emailAddress" width="13" class="contact-info__ContactLabelIcon-sc-mmkjr6-0 bOaORQ" style="display: block; background-color: rgb(25, 167, 206);"></span></td></tr></tbody></table></td><td style="padding: 0px;"><a href="mailto:eitan.alperstein@gmail.com" color="#146C94" font-size="medium" class="contact-info__ExternalLink-sc-mmkjr6-2 djHrwm" style="text-decoration: none; color: rgb(20, 108, 148); font-size: 14px;"><span>eitan.alperstein@gmail.com</span></a></td></tr><tr height="25" style="vertical-align: middle;"><td width="30" style="vertical-align: middle;"><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td style="vertical-align: bottom;"><span color="#19A7Ce" width="11" class="contact-info__IconWrapper-sc-mmkjr6-1 KxJwQ" style="display: inline-block; background-color: rgb(25, 167, 206);"><img src="https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png" color="#19A7Ce" alt="website" width="13" class="contact-info__ContactLabelIcon-sc-mmkjr6-0 bOaORQ" style="display: block; background-color: rgb(25, 167, 206);"></span></td></tr></tbody></table></td><td style="padding: 0px;"><a href="//eitanalperstein.com" color="#146C94" font-size="medium" class="contact-info__ExternalLink-sc-mmkjr6-2 djHrwm" style="text-decoration: none; color: rgb(20, 108, 148); font-size: 14px;"><span>eitanalperstein.com</span></a></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="width: 100%; vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td height="30"></td></tr><tr><td color="#19A7Ce" direction="horizontal" width="auto" height="1" class="color-divider__Divider-sc-1h38qjv-0 jmHABg" style="width: 100%; border-bottom: 1px solid rgb(25, 167, 206); border-left: none; display: block;"></td></tr><tr><td height="30"></td></tr></tbody></table></td></tr><tr><td><table cellpadding="0" cellspacing="0" border="0" class="table__StyledTable-sc-1avdl6r-0 jKaNHW" style="width: 100%; vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Verdana;"><tbody><tr><td style="vertical-align: top;"></td></tr></tbody></table></td></tr><tr><td height="30"></td></tr><tr><td style="text-align: center;"></td></tr></tbody></table>
+    </footer>
+    -->
 </body>
 
 </html>
