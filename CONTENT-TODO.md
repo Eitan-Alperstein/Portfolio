@@ -85,7 +85,7 @@ Once it starts, move the entry from `volunteering.upcoming` to `volunteering.ite
 
 ### Academics updates (`/academics`)
 
-`academics.years` in `src/data/life.ts`. When AP scores come out, add `score: 5` (or whatever it is) to the course. Remove `current: true` from a year once it's over, and add the new year at the top. The summary line is `academics.apSummary`, which you update by hand. The big "N/N" counter is computed from the scores.
+`academics.years` in `src/data/life.ts`. When AP scores come out, add the `score` to the course (and a `short` name like `"Calc BC"` for the homepage summary), and raise `academics.apExamsTaken` by the number of new exams. Remove `current: true` from a year once it's over, and add the new year at the top. Everything else is computed: the big "N/M" counter is (listed 5s) / `apExamsTaken`, and the "5s on AP …" lines list every course with a 5.
 
 ### "Right now" list (Home → About)
 

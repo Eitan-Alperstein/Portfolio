@@ -3,13 +3,15 @@ import Page from "../layouts/Page.astro";
 import Arrow from "../components/Arrow.astro";
 import ComingSoon from "../components/ComingSoon.astro";
 import { paw } from "../data/life";
+
+const roles = paw.timeline.filter((t) => t.kind === "role");
 ---
 <Page
   title="The Paw"
   eyebrow="Journalism · Business · Web"
   heading="The Paw, <span>my school's newspaper.</span>"
   tagline={paw.summary}
-  description="Eitan Alperstein at The Paw, Denver Jewish Day School's student newspaper: reporter, Business & Advertising Manager, and web developer."
+  description="Eitan Alperstein at The Paw, Denver Jewish Day School's student newspaper: reporter, Business & Advertising Manager, and creator of its new website."
 >
   <div slot="head" class="head-links">
     <a class="btn" href={paw.site} target="_blank" rel="noopener">Read The Paw <Arrow /></a>
@@ -19,7 +21,7 @@ import { paw } from "../data/life";
   <section class="wrap block">
     <div class="stats">
       <div class="stat"><b>{paw.articlesWritten}</b><span>articles written</span></div>
-      <div class="stat"><b>{paw.roles.length}</b><span>roles on staff</span></div>
+      <div class="stat"><b>{roles.length}</b><span>roles on staff</span></div>
       {paw.adRevenue
         ? <div class="stat"><b>{paw.adRevenue.amount}</b><span>ad revenue, {paw.adRevenue.period}</span></div>
         : <div class="stat pending"><b>—</b><span>yearly ad revenue · coming soon</span></div>}
@@ -28,12 +30,12 @@ import { paw } from "../data/life";
 
   <section class="wrap block">
     <p class="eyebrow">What I do</p>
-    <h2>Three jobs at one paper</h2>
+    <h2>My time at The Paw</h2>
     <ol class="timeline">
-      {paw.roles.map((r) => (
-        <li>
+      {paw.timeline.map((r) => (
+        <li class={r.kind}>
           <span class="dot" aria-hidden="true"></span>
-          <p class="when">{r.when}</p>
+          <p class="when">{r.when}{r.kind === "milestone" && <span class="tag">Milestone</span>}</p>
           <h3>{r.title}</h3>
           <p>{r.text}</p>
         </li>
@@ -79,7 +81,9 @@ import { paw } from "../data/life";
   .timeline { list-style: none; margin: 0; padding: 0 0 0 26px; border-left: 1px solid var(--line-strong); display: grid; gap: 34px; max-width: 760px; }
   .timeline li { position: relative; }
   .timeline .dot { position: absolute; left: -32px; top: 4px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
-  .timeline .when { margin: 0; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .timeline .when { margin: 0; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+  .timeline .milestone .dot { background: var(--accent); border-radius: 3px; transform: rotate(45deg); }
+  .timeline .tag { font: 500 10.5px/1 var(--mono); letter-spacing: .06em; color: var(--muted); border: 1px solid var(--line-strong); padding: 4px 7px; border-radius: 999px; }
   .timeline h3 { margin: 8px 0 6px; font-size: 21px; letter-spacing: -0.02em; }
   .timeline p { margin: 0; color: var(--ink-soft); }
   .articles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }

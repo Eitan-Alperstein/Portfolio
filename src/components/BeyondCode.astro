@@ -1,18 +1,15 @@
 ---
 import Arrow from "./Arrow.astro";
-import { paw, tutoring, volunteering, languages, academics } from "../data/life";
-
-const scores = academics.years.flatMap((y) => y.courses).filter((c) => c.score).map((c) => c.score);
-const fives = scores.filter((s) => s === 5).length;
-const apLine = fives === scores.length ? `5s on all ${scores.length} AP exams so far.` : `${fives} AP exams with a 5.`;
+import { paw, tutoring, volunteering, languages } from "../data/life";
+import { ap } from "../lib/ap";
 
 const cards = [
   { href: "/music", title: "Music", text: "Self-taught guitar, every style, plus a pedal I built to model the Money for Nothing tone.", icon: "music" },
   { href: "/tutoring", title: "Math tutoring", text: `${tutoring.facts[1].value}. Paid, one-on-one, and taking new students.`, icon: "tutor", badge: "Taking students" },
-  { href: "/the-paw", title: "The Paw", text: `Reporter (${paw.articlesWritten} articles), Business & Advertising Manager, and the paper's web developer.`, icon: "paw" },
-  { href: "/academics", title: "Academics", text: `AP and honors math, science, history and Spanish. ${apLine}`, icon: "school" },
+  { href: "/the-paw", title: "The Paw", text: `Reporter (${paw.articlesWritten} articles) and Business & Advertising Manager. I also created our new website.`, icon: "paw" },
+  { href: "/academics", title: "Academics", text: `AP and honors math, science, history and Spanish. 5s on AP ${ap.shortList}.`, icon: "school" },
   { href: "/languages", title: "Languages", text: `${languages.list.length} languages at various levels, from native to "just started".`, icon: "lang" },
-  { href: "/volunteering", title: "Volunteering", text: `${volunteering.hours}+ hours with Chabad, including founding a CTeen chapter.`, icon: "heart" },
+  { href: "/volunteering", title: "Volunteering", text: `${volunteering.chabad.hours}+ hours with Chabad, including founding a CTeen chapter, plus school volunteering.`, icon: "heart" },
 ];
 ---
 <section id="beyond" class="wrap">

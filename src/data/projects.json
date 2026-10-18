@@ -31,7 +31,7 @@
     "group": "students",
     "hero": 1,
     "slug": "the-paw",
-    "long": "The website for Denver Jewish Day School's student newspaper, where I'm lead developer. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code.",
+    "long": "The website for Denver Jewish Day School's student newspaper, which I created. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code.",
     "ai": true
   },
   {

@@ -98,12 +98,14 @@ export const paw = {
   site: "https://www.thepawnews.com",
   archive: "https://sites.google.com/view/thepawarchives",
   summary:
-    "The student newspaper at Denver Jewish Day School. I joined as a reporter my freshman year, and now I run the business side and the website too.",
-  roles: [
-    { title: "Reporter", when: "Since freshman year", text: "Writing news, features and opinion pieces. 10+ articles so far." },
-    { title: "Web developer", when: "The website", text: "Overhauled the paper's website: a fast static site for readers and a CMS so editors can publish without code." },
-    { title: "Business & Advertising Manager", when: "Since summer 2026", text: "Running ad sales and the business side of the paper." },
-  ],
+    "The student newspaper at Denver Jewish Day School. I joined as a reporter my freshman year, now I run the business side, and I created our new website.",
+  // Timeline, oldest first. "role" entries are staff positions; "milestone"
+  // entries are things done along the way.
+  timeline: [
+    { kind: "role", title: "Reporter", when: "Since freshman year", text: "Writing news, features and opinion pieces. 10+ articles so far." },
+    { kind: "role", title: "Business & Advertising Manager", when: "Since summer 2026", text: "Running ad sales and the business side of the paper." },
+    { kind: "milestone", title: "Created our new website", when: "Oct 2026", text: "A fast static site for readers, and a CMS so editors can publish without touching code." },
+  ] as { kind: "role" | "milestone"; title: string; when: string; text: string }[],
   articlesWritten: "10+",
   // Yearly ad revenue, as you want it displayed, e.g. "$2,400". Leave null until you have it.
   adRevenue: null as null | { amount: string; period: string },
@@ -123,13 +125,15 @@ export const paw = {
 
 export interface Course {
   name: string;
+  short?: string; // short name used in summaries, e.g. "APUSH"
   score?: number; // AP exam score
 }
 
 export const academics = {
   school: "Denver Jewish Day School",
   classOf: 2028,
-  apSummary: "5 on every AP exam I've taken so far: Computer Science A, European History, US History, Calculus AB, Language and Composition, and Macroeconomics.",
+  // Total AP exams taken so far, including any not listed as a course below.
+  apExamsTaken: 7,
   years: [
     {
       label: "2026–27", grade: "Junior", current: true,
@@ -141,14 +145,14 @@ export const academics = {
     {
       label: "2025–26", grade: "Sophomore",
       courses: [
-        { name: "AP US History", score: 5 }, { name: "AP Calculus AB", score: 5 }, { name: "Honors Chemistry" },
-        { name: "Honors Spanish II" }, { name: "AP Language and Composition", score: 5 }, { name: "AP Macroeconomics", score: 5 },
+        { name: "AP US History", short: "APUSH", score: 5 }, { name: "AP Calculus AB", short: "Calc AB", score: 5 }, { name: "Honors Chemistry" },
+        { name: "Honors Spanish II" }, { name: "AP Language and Composition", short: "Lang", score: 5 }, { name: "AP Macroeconomics", short: "Macro", score: 5 },
       ],
     },
     {
       label: "2024–25", grade: "Freshman",
       courses: [
-        { name: "AP Computer Science A", score: 5 }, { name: "AP European History", score: 5 }, { name: "Spanish I" },
+        { name: "AP Computer Science A", short: "CS A", score: 5 }, { name: "AP European History", short: "Euro", score: 5 }, { name: "Spanish I" },
       ],
     },
   ] as { label: string; grade: string; current?: boolean; courses: Course[] }[],
@@ -172,13 +176,26 @@ export const languages = {
 // --------------------------------------------------------- volunteering
 
 export const volunteering = {
-  intro: "Most of my volunteering has been with Chabad in Denver, and I'm about to start something new at school.",
-  hours: 40,
-  items: [
-    { title: "Founded the CTeen program", where: "Chabad of Central Park, Denver", text: "Started the CTeen program, Chabad's teen network, at our local Chabad." },
-    { title: "Moving the synagogue", where: "Chabad, Denver", text: "Helped move the synagogue into its new location." },
-  ],
-  upcoming: [
-    { title: "School farmette", text: "A new volunteering project with my school's farmette. Starting soon." },
-  ],
+  intro:
+    "Most of my volunteering has been with Chabad: starting something new, helping with a big move, and the everyday setup that gets the synagogue ready for prayer. I've pitched in at school too, and a new project there is about to start.",
+  chabad: {
+    name: "Chabad",
+    hours: 40,
+    // Grouped by the kind of help, in the order they read best.
+    work: [
+      { kind: "Starting something", title: "Founded CTeen at Chabad of Central Park", text: "Started the CTeen program, Chabad's teen network, at Chabad of Central Park in Denver." },
+      { kind: "A big move", title: "Moving the synagogue", text: "Helped move the synagogue to its new location." },
+      { kind: "The everyday", title: "Getting ready for prayer", text: "Miscellaneous chores getting the synagogue ready for prayer: setting up and whatever else needs doing." },
+    ],
+  },
+  school: {
+    name: "School",
+    hours: 2,
+    work: [
+      { title: "Helping out at school", text: "Miscellaneous school volunteering." },
+    ],
+    upcoming: [
+      { title: "The school farmette", text: "A new volunteering project with my school's farmette. Starting soon." },
+    ],
+  },
 };

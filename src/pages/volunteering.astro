@@ -1,46 +1,56 @@
 ---
 import Page from "../layouts/Page.astro";
 import { volunteering as v } from "../data/life";
+const { chabad, school } = v;
 ---
 <Page
   title="Volunteering"
-  eyebrow="Volunteering · Community"
-  heading="Showing up, <span>mostly at Chabad.</span>"
+  eyebrow="Volunteering"
+  heading="Pitching in, <span>at Chabad and at school.</span>"
   tagline={v.intro}
-  description="Eitan Alperstein's volunteering: 40+ hours with Chabad in Denver, including founding the CTeen program at Chabad of Central Park."
+  description="Eitan Alperstein's volunteering: 40+ hours with Chabad in Denver, including founding the CTeen program at Chabad of Central Park, plus school volunteering."
 >
   <section class="wrap block">
-    <div class="hours">
-      <b><span data-count={v.hours}>{v.hours}</span>+</b>
-      <p>hours volunteering with Chabad</p>
+    <div class="group">
+      <header class="group-head" data-reveal>
+        <p class="eyebrow">{chabad.name}</p>
+        <p class="hours"><b><span data-count={chabad.hours}>{chabad.hours}</span>+</b> hours</p>
+      </header>
+      <ol class="work">
+        {chabad.work.map((w, i) => (
+          <li data-reveal style={`--d:${i * 80}ms`}>
+            <p class="kind"><span class="n">0{i + 1}</span>{w.kind}</p>
+            <div>
+              <h3>{w.title}</h3>
+              <p>{w.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
   <section class="wrap block">
-    <p class="eyebrow">What I've done</p>
-    <h2>With Chabad</h2>
-    <div class="items">
-      {v.items.map((x) => (
-        <article class="item">
-          <p class="where">{x.where}</p>
-          <h3>{x.title}</h3>
-          <p>{x.text}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="wrap block">
-    <p class="eyebrow">Up next</p>
-    <h2>Starting soon</h2>
-    <div class="items">
-      {v.upcoming.map((x) => (
-        <article class="item next">
-          <span class="badge">Starting soon</span>
-          <h3>{x.title}</h3>
-          <p>{x.text}</p>
-        </article>
-      ))}
+    <div class="group">
+      <header class="group-head" data-reveal>
+        <p class="eyebrow">{school.name}</p>
+        <p class="hours"><b>{school.hours}</b> hours so far</p>
+      </header>
+      <div class="school">
+        {school.work.map((w) => (
+          <article class="card" data-reveal>
+            <h3>{w.title}</h3>
+            <p>{w.text}</p>
+          </article>
+        ))}
+        {school.upcoming.map((w) => (
+          <article class="card next" data-reveal style="--d:80ms">
+            <span class="badge">Starting soon</span>
+            <h3>{w.title}</h3>
+            <p>{w.text}</p>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 </Page>
@@ -65,16 +75,30 @@ import { volunteering as v } from "../data/life";
 </script>
 
 <style>
-  .hours { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 24px; padding: 40px;
-    background: radial-gradient(60% 100% at 0% 0%, rgba(159,177,255,0.14), transparent 60%), var(--bg-raised); }
-  .hours b { font-size: clamp(72px, 12vw, 128px); line-height: .9; letter-spacing: -0.06em; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .hours p { margin: 0; font-size: 18px; color: var(--ink-soft); }
-  .items { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
-  .item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 26px; display: grid; gap: 8px; align-content: start; }
-  .item.next { border-style: dashed; border-color: var(--line-strong); }
-  .where { margin: 0; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-  .item h3 { margin: 0; font-size: 21px; letter-spacing: -0.02em; }
-  .item p { margin: 0; color: var(--ink-soft); }
+  .group { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; align-items: start; }
+  .group-head { position: sticky; top: 100px; display: grid; gap: 14px; }
+  .group-head .eyebrow { margin: 0; }
+  .hours { margin: 0; color: var(--muted); font-size: 15px; }
+  .hours b { display: block; font-size: clamp(56px, 7vw, 84px); line-height: .95; letter-spacing: -0.05em; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .work { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .work li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; padding: 30px 4px; border-bottom: 1px solid var(--line); }
+  .kind { margin: 4px 0 0; font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); display: flex; gap: 10px; }
+  .n { color: var(--muted); }
+  .work h3 { margin: 0 0 8px; font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -0.025em; font-weight: 650; }
+  .work p { margin: 0; color: var(--ink-soft); font-size: 16.5px; max-width: 560px; }
+
+  .school { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 26px; display: grid; gap: 8px; align-content: start; }
+  .card.next { border-style: dashed; border-color: var(--line-strong); }
+  .card h3 { margin: 0; font-size: 21px; letter-spacing: -0.02em; }
+  .card p { margin: 0; color: var(--ink-soft); }
   .badge { justify-self: start; font: 500 11px/1 var(--mono); color: var(--accent); border: 1px solid rgba(159,177,255,.45); padding: 6px 9px; border-radius: 999px; }
-  @media (max-width: 760px) { .items { grid-template-columns: 1fr; } .hours { padding: 28px; } }
+
+  @media (max-width: 900px) {
+    .group { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .group-head { position: static; gap: 10px; }
+    .work li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  }
+  @media (max-width: 640px) { .school { grid-template-columns: minmax(0, 1fr); } }
 </style>

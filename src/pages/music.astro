@@ -27,6 +27,7 @@ const ytId = (url: string) => url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w
   <section class="wrap block">
     <p class="eyebrow">Play along</p>
     <h2>Pluck a string</h2>
+    <p class="ai-note"><span class="tags"><span class="ai" title="Built with AI assistance">AI</span></span>Built with AI for this site.</p>
     <div class="guitar" data-guitar>
       <div class="neck">
         {strings.map((s) => (
@@ -126,6 +127,7 @@ const ytId = (url: string) => url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w
   .strum { white-space: nowrap; font: 500 12.5px/1 var(--mono); color: var(--ink); background: var(--accent-soft); border: 1px solid rgba(159,177,255,.45); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
   .strum:hover { background: var(--accent); color: var(--accent-ink); }
   .note-small { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .ai-note { display: flex; align-items: center; gap: 10px; margin: -12px 0 22px; color: var(--muted); font-size: 14px; }
 
   .recs { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
   .rec { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-raised); }

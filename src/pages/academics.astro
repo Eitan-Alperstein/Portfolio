@@ -1,10 +1,9 @@
 ---
 import Page from "../layouts/Page.astro";
 import { academics as a } from "../data/life";
+import { ap } from "../lib/ap";
 
 const kind = (name: string) => name.startsWith("AP ") ? "AP" : name.startsWith("Honors ") ? "Honors" : null;
-const scored = a.years.flatMap((y) => y.courses).filter((c) => c.score);
-const fives = scored.filter((c) => c.score === 5);
 ---
 <Page
   title="Academics"
@@ -16,12 +15,12 @@ const fives = scored.filter((c) => c.score === 5);
   <section class="wrap block">
     <div class="scores">
       <div class="big">
-        <b>{fives.length}<span>/</span>{scored.length}</b>
+        <b>{ap.fives}<span>/</span>{ap.taken}</b>
         <p>AP exams with a 5</p>
       </div>
       <div class="detail">
-        <p class="sum">{a.apSummary}</p>
-        <div class="chips">{scored.map((c) => <span><i>{c.score}</i>{c.name.replace(/^AP /, "")}</span>)}</div>
+        <p class="sum">5s on AP {ap.longList}.</p>
+        <div class="chips">{ap.fiveCourses.map((c) => <span><i>5</i>{c.name.replace(/^AP /, "")}</span>)}</div>
       </div>
     </div>
   </section>
