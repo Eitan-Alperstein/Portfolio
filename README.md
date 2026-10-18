@@ -92,16 +92,17 @@ The title comes from the repo name (`tab-teacher` → "Tab Teacher", `SphericalV
 Private repos can't be read publicly, so these are written by hand: add an entry to `"private"` in `src/data/projects.overrides.json`, copying an existing one:
 
 ```json
-{ "id": "my-app", "title": "My App", "blurb": "One line about it.", "stack": ["Swift"], "url": "https://…", "group": "mine", "ai": false }
+{ "id": "my-app", "title": "My App", "blurb": "One line about it.", "stack": ["Swift"], "url": "https://…", "group": "mine", "ai": false, "date": "2026-07" }
 ```
 
-`group` is `students`, `mine` or `sims`. `url` can be `null`. Private projects never get a "Code" link. Then add its `id` to `"order"` (below), commit and push.
+`group` is `students`, `mine` or `sims`. `url` can be `null`. `date` is the month you made it (`YYYY-MM`). Private projects never get a "Code" link. Commit and push.
 
 ### Changing how a synced project looks: `projects.overrides.json`
 
-- **`order`**: the display order, by repo name (or private `id`). Projects not listed go at the end, newest first. Within each group on the page, this order is kept.
+- **Order**: within each group, projects are listed newest first by `date`.
 - **`repos`**: per-repo overrides keyed by repo name, using the same field names as private entries. Common ones:
   - `"title": "3D Projection"`: a nicer name than the repo's.
+  - `"date": "2026-07"`: when you made it, shown on the card and used for ordering. Defaults to the month the GitHub repo was created, so set it when the repo is newer than the project.
   - `"blurb"`, `"stack"`, `"url"`, `"group"`, `"ai"`: replace what GitHub says. For example, `"url": "/daily-tracker"` points Visit at a page on this site instead of the repo's Website.
   - Featured cards: `"hero": 2` sets the card's position (1 = first, the wide one), `"long"` is the longer text on the card, and `"slug"` picks custom artwork (`the-paw`, `tab-teacher`, `spherical-voronoi`, mapped in `src/components/Featured.astro`). Without a slug, a featured card gets generated artwork with its title. For a public repo, the `portfolio-featured` topic decides *whether* it's featured; `hero` only sets the position.
 

@@ -15,6 +15,7 @@ export interface Project {
   repo: string | null; // "Code": only ever set for public repos
   group: Group;
   ai: boolean;
+  date: string; // "YYYY-MM": when it was made. Defaults to the repo's creation month.
   hero?: number; // featured card position (1 = first)
   slug?: string; // featured artwork, see Featured.astro
   long?: string; // featured card text
@@ -56,6 +57,7 @@ function fromRepo(r: Repo): Project {
     repo: r.url,
     group,
     ai: r.topics.includes("ai"),
+    date: r.created.slice(0, 7),
     hero: r.topics.includes("portfolio-featured") ? 100 : undefined,
   };
 }
@@ -70,17 +72,18 @@ const publicProjects = (github as Repo[]).map((r) => {
 });
 const privateProjects = (overrides.private as (Override & { id: string })[]).map(({ id, ...p }) => ({ key: id, repo: null, ...p }) as Project);
 
-const order = overrides.order as string[];
-const created = new Map((github as Repo[]).map((r) => [r.name, r.created]));
-const rank = (p: Project) => { const i = order.indexOf(p.key); return i === -1 ? Infinity : i; };
-
-/** Every project, in display order: the overrides' `order` list first, then any
- *  newly tagged repos (newest first). */
+/** Every project, newest first. */
 export const projects: Project[] = [...publicProjects, ...privateProjects].sort((a, b) =>
-  rank(a) - rank(b) || (created.get(b.key) ?? "").localeCompare(created.get(a.key) ?? ""));
+  b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
 
 /** Featured cards, in `hero` order. */
-export const featured = projects.filter((p) => p.hero !== undefined).sort((a, b) => a.hero! - b.hero! || rank(a) - rank(b));
+export const featured = projects.filter((p) => p.hero !== undefined).sort((a, b) => a.hero! - b.hero!);
+
+/** "2026-07" → "Jul 2026" */
+export const formatDate = (date: string) => {
+  const [y, m] = date.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1)).toLocaleString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+};
 
 export const project = (key: string) => {
   const p = projects.find((x) => x.key === key);

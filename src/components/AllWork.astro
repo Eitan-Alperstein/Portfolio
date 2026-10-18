@@ -1,5 +1,5 @@
 ---
-import { projects } from "../lib/projects";
+import { projects, formatDate } from "../lib/projects";
 import Tags from "./Tags.astro";
 import Links from "./Links.astro";
 
@@ -27,7 +27,7 @@ const groups = [
           {projects.filter((p) => p.group === g.id).map((p) => (
             <li>
               <div class="name">
-                <span>{p.title}</span>
+                <span>{p.title} <time datetime={p.date}>{formatDate(p.date)}</time></span>
                 <Tags stack={p.stack} ai={p.ai} limit={3} />
               </div>
               <p class="blurb">{p.blurb}</p>
@@ -54,6 +54,7 @@ const groups = [
   li:hover { background: linear-gradient(90deg, var(--accent-soft), transparent 70%); }
   .name { display: flex; flex-direction: column; gap: 8px; }
   .name > span { font-weight: 600; font-size: 16px; }
+  time { margin-left: 6px; font-weight: 400; font-size: 13px; color: var(--muted); white-space: nowrap; }
   .blurb { margin: 0; color: var(--ink-soft); font-size: 15px; }
   @media (max-width: 960px) {
     .group { grid-template-columns: 1fr; gap: 18px; }

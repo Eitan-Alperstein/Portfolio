@@ -1,19 +1,5 @@
 {
   "_readme": "Overrides for the auto-synced project list. See README.md → 'How to add a project'.",
-  "order": [
-    "tab-teacher",
-    "the-paw",
-    "daily-tracker",
-    "the-forge",
-    "SphericalVoronoi",
-    "final-grade-calculator",
-    "3D-Cube",
-    "desmos-guide",
-    "reeltab",
-    "arduino-parkour",
-    "training-log",
-    "lloyd"
-  ],
   "repos": {
     "tab-teacher": {
       "hero": 2,
@@ -21,7 +7,8 @@
       "long": "A practice app for learning guitar solos. Pick a song from the menu and work through the solo with the tab in front of you. Built because I wanted it for my own practicing."
     },
     "daily-tracker": {
-      "url": "/daily-tracker"
+      "url": "/daily-tracker",
+      "date": "2026-08"
     },
     "SphericalVoronoi": {
       "hero": 3,
@@ -35,7 +22,8 @@
       "title": "Desmos SAT Prep"
     },
     "arduino-parkour": {
-      "url": "/arduino-parkour"
+      "url": "/arduino-parkour",
+      "date": "2026-07"
     },
     "lloyd": {
       "title": "Lloyd Relaxation"
@@ -56,7 +44,8 @@
       "ai": true,
       "hero": 1,
       "slug": "the-paw",
-      "long": "The website for Denver Jewish Day School's student newspaper, which I created. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code."
+      "long": "The website for Denver Jewish Day School's student newspaper, which I created. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code.",
+      "date": "2026-10"
     },
     {
       "id": "the-forge",
@@ -70,7 +59,8 @@
       ],
       "url": "https://forge.eitanalperstein.com",
       "group": "students",
-      "ai": true
+      "ai": true,
+      "date": "2026-04"
     },
     {
       "id": "reeltab",
@@ -82,7 +72,8 @@
       ],
       "url": null,
       "group": "mine",
-      "ai": true
+      "ai": true,
+      "date": "2026-08"
     },
     {
       "id": "training-log",
@@ -95,7 +86,8 @@
       ],
       "url": "https://gym-five-gold.vercel.app",
       "group": "mine",
-      "ai": true
+      "ai": true,
+      "date": "2026-04"
     }
   ]
 }

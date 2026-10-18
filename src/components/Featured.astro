@@ -1,5 +1,5 @@
 ---
-import { featured } from "../lib/projects";
+import { featured, formatDate } from "../lib/projects";
 import Tags from "./Tags.astro";
 import Links from "./Links.astro";
 import PaperArt from "./art/PaperArt.astro";
@@ -21,7 +21,7 @@ const hero = featured;
         <article class={`card c${i}`} data-reveal style={`--d: ${i * 90}ms`}>
           <div class="visual">{Art ? <Art /> : <GenericArt title={p.title} />}</div>
           <div class="body">
-            <p class="num">0{i + 1}</p>
+            <p class="num">0{i + 1} · <time datetime={p.date}>{formatDate(p.date)}</time></p>
             <h3>{p.title}</h3>
             <p class="desc">{p.long}</p>
             <Tags stack={p.stack} ai={p.ai} />
