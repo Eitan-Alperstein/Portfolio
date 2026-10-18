@@ -11,5 +11,5 @@ export const PHOTO: string | null = null;
 export const NOW = [
   { label: "Building", text: "Tab Teacher, a practice app for learning guitar solos note by note." },
   { label: "Building", text: "Desmos SAT Prep, a guide to solving SAT math with the built-in Desmos calculator." },
-  { label: "Running", text: "The tech side of The Paw, my school's student newspaper, as lead developer." },
+  { label: "Running", text: "The business & advertising side of The Paw, my school's student newspaper." },
 ];
