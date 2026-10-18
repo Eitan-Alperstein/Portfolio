@@ -9,7 +9,7 @@ export const GITHUB_URL = "https://github.com/Eitan-Alperstein";
 export const PHOTO: string | null = null;
 
 export const NOW = [
-  { label: "Building", text: "ReelTab, a macOS app that turns guitar tab scrolling past in Reels and TikToks into a real, playable tab." },
-  { label: "Building", text: "Daily Tracker, a native habit tracker with streaks, heatmaps and phone reminders." },
+  { label: "Building", text: "Tab Teacher, a practice app for learning guitar solos note by note." },
+  { label: "Building", text: "Desmos SAT Prep, a guide to solving SAT math with the built-in Desmos calculator." },
   { label: "Running", text: "The tech side of The Paw, my school's student newspaper, as lead developer." },
 ];

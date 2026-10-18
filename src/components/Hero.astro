@@ -1,5 +1,4 @@
 ---
-import { EMAIL } from "../data/site";
 ---
 <section class="hero" id="top">
   <canvas class="field" aria-hidden="true"></canvas>
@@ -14,10 +13,9 @@ import { EMAIL } from "../data/site";
     </p>
     <div class="actions" data-reveal style="--d: 240ms">
       <a class="btn primary" href="#work">See what I've made</a>
-      <a class="btn" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      <a class="btn" href="#contact">Contact</a>
     </div>
   </div>
-  <p class="hint wrap" aria-hidden="true">Move your cursor around. Every cell is the set of points closest to one seed.</p>
 </section>
 
 <script>
@@ -58,10 +56,5 @@ import { EMAIL } from "../data/site";
   .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
   .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
-  .hint {
-    position: absolute; left: 0; right: 0; bottom: 28px;
-    font: 400 12px/1.4 var(--mono); color: var(--muted); opacity: .75;
-  }
-  @media (hover: none) { .hint { display: none; } }
   @media (max-width: 640px) { .btn { height: 44px; font-size: 14px; } }
 </style>
