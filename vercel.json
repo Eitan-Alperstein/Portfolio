@@ -2,12 +2,38 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/", "has": [{ "type": "host", "value": "tracker.eitanalperstein.com" }], "destination": "/daily-tracker/" },
-    { "source": "/", "has": [{ "type": "host", "value": "parkour.eitanalperstein.com" }], "destination": "/arduino-parkour/" }
-  ],
   "redirects": [
-    { "source": "/projects.html", "destination": "/#code", "permanent": false },
-    { "source": "/projects", "destination": "/#code", "permanent": false }
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "tracker.eitanalperstein.com"
+        }
+      ],
+      "destination": "https://www.eitanalperstein.com/daily-tracker",
+      "permanent": false
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "parkour.eitanalperstein.com"
+        }
+      ],
+      "destination": "https://www.eitanalperstein.com/arduino-parkour",
+      "permanent": false
+    },
+    {
+      "source": "/projects.html",
+      "destination": "/#code",
+      "permanent": false
+    },
+    {
+      "source": "/projects",
+      "destination": "/#code",
+      "permanent": false
+    }
   ]
 }
