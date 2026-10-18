@@ -19,6 +19,7 @@ After either, run `npm run build` to check it, then commit and push (see README.
 | Pedal poster | `/music` → "The Money for Nothing pedal" | `~/dev/screenshots/pedal-poster/` | Only the first image is used. |
 | Pedal build photos | `/music` → "Build photos" | `~/dev/screenshots/pedal-build/` | Any number. |
 | Daily Tracker screenshots | `/daily-tracker` → "What it looks like" | `~/dev/screenshots/daily-tracker/` | Any number. |
+| Tempo screenshots | `/tempo` → "What it looks like" | `~/dev/screenshots/tempo/` | Any number. |
 | Arduino Parkour photos | `/arduino-parkour` → "The real thing" | `~/dev/screenshots/arduino-parkour/` | Any number. |
 
 Accepted formats: PNG, JPEG, WebP, HEIC, TIFF, GIF. GIFs are copied as-is (not resized), so keep them small. The script uses macOS's built-in `sips`, so run it on a Mac.

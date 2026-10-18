@@ -12,7 +12,7 @@ import path from "node:path";
 const SRC = process.env.SHOTS_SRC || path.join(os.homedir(), "dev", "screenshots");
 const DEST = path.join(process.cwd(), "public", "shots");
 // One folder per image slot on the site. See CONTENT-TODO.md for where each shows up.
-const SLOTS = ["profile", "pedal-poster", "pedal-build", "daily-tracker", "arduino-parkour"];
+const SLOTS = ["profile", "pedal-poster", "pedal-build", "daily-tracker", "arduino-parkour", "tempo"];
 const IMAGE = /\.(png|jpe?g|webp|heic|tiff?|gif)$/i;
 
 for (const project of SLOTS) {

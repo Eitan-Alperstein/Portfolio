@@ -26,6 +26,17 @@
       "permanent": false
     },
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "tempo.eitanalperstein.com"
+        }
+      ],
+      "destination": "https://www.eitanalperstein.com/tempo",
+      "permanent": false
+    },
+    {
       "source": "/projects.html",
       "destination": "/#code",
       "permanent": false

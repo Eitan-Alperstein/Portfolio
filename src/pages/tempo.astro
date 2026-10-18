@@ -1,0 +1,209 @@
+---
+import Showcase from "../layouts/Showcase.astro";
+import Gallery from "../components/Gallery.astro";
+
+// Not looked up with project("tempo"), so this page builds before the GitHub
+// sync has picked the repo up.
+const repo = "https://github.com/Eitan-Alperstein/tempo";
+const examples = [
+  "Essay Friday 2h #school !",
+  "Review calculus, 1 hour, high priority",
+  "Practice the solo 4-5:30pm #guitar",
+  "Call grandma tomorrow at 3pm",
+  "Layout pages eod 45m #news p1",
+  "Wear sun hat",
+  "Plan the trip #travel",
+];
+const keys = [
+  ["Quick add from anywhere", "⌃⌥Space"], ["New task", "⌘N"], ["Complete selected", "⌘↩"], ["Start / pause focus", "⌘T"],
+  ["Day schedule", "⇧⌘D"], ["Pin / unpin", "⇧⌘P"], ["Recommended / Manual order", "⌥⌘O"], ["Undo", "⌘Z"],
+];
+---
+<Showcase
+  title="Tempo"
+  eyebrow="macOS app · Tauri"
+  tagline="A calm task manager for the Mac. It ranks your tasks by how important they are, how soon they're due and how much time you actually have left today, so you can see what to do next."
+  description="Tempo: a native macOS task manager that ranks tasks by importance, deadline and free time, with natural-language quick add, a day schedule and a focus timer."
+  stack={["Tauri", "React", "TypeScript", "Rust", "SQLite"]}
+  ai
+  repo={repo}
+>
+  <section class="wrap block" data-quickadd>
+    <p class="eyebrow">Try it · Quick add</p>
+    <h2>Type it the way you'd say it</h2>
+    <div class="prose"><p>One line becomes a task. This box runs the same parser as the app: it picks out how long the task takes, when it's due, a time block, how important it is and its project, and whatever it doesn't recognize stays in the title. The demo knows four projects: School, Engineering, Newspaper and Guitar.</p></div>
+    <div class="qa">
+      <form class="qa-bar">
+        <span class="qa-plus" aria-hidden="true">+</span>
+        <input data-input type="text" value={examples[0]} aria-label="Quick add a task" autocomplete="off" spellcheck="false" />
+        <button data-add type="submit">Add to list ↓</button>
+      </form>
+      <div class="qa-out" aria-live="polite">
+        <p class="qa-title" data-title></p>
+        <ul class="qa-fields" data-fields></ul>
+        <ul class="qa-notes" data-notes></ul>
+        <p class="qa-status" data-status></p>
+      </div>
+      <div class="qa-examples">
+        <span>Try:</span>
+        {examples.map((e) => <button type="button" data-example={e}>{e}</button>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" data-ranking>
+    <p class="eyebrow">Try it · Recommended order</p>
+    <h2>Why this task comes first</h2>
+    <div class="prose">
+      <p>Every task gets a score from 0 to 100, from four parts. Change any task, or how much free time you have left today, and the list re-ranks with the app's real scoring code.</p>
+    </div>
+    <div class="formula">
+      <span><i class="c-imp"></i>40% importance</span>
+      <span><i class="c-urg"></i>35% urgency</span>
+      <span><i class="c-over"></i>10% overdue</span>
+      <span><i class="c-fit"></i>15% fits your free time</span>
+    </div>
+    <div class="free">
+      <label for="free">Free time left today</label>
+      <input id="free" data-free type="range" min="0" max="480" step="15" value="90" />
+      <output data-free-label for="free"></output>
+    </div>
+    <ol class="t-list" data-list></ol>
+    <div class="two explain">
+      <div class="prose">
+        <p><strong>Urgency</strong> rises along an S-curve as the deadline gets closer: about half three days out, 0.8 a day out, full once it's due. A task with no date starts at 0.15 and slowly climbs to 0.30 over a month, so it never vanishes.</p>
+      </div>
+      <div class="prose">
+        <p><strong>Overdue</strong> adds a capped boost, so a trivial overdue chore can't bury an important task due tomorrow. <strong>Fit</strong> gives full credit to every task that fits in your free time, so short tasks don't win just for being short.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Screenshots</p>
+    <h2>What it looks like</h2>
+    <Gallery slug="tempo" alt="Tempo" />
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Features</p>
+    <h2>What it does</h2>
+    <ul class="features">
+      <li><strong>Today, planned</strong>Overdue and due-today tasks, plus up to five suggestions that fit the time you have left. A bar shows planned against available time and warns when the day is overfull.</li>
+      <li><strong>Day schedule</strong>Drag tasks onto a timeline to give them a time block. Calendar events show up as busy time, and overlaps are flagged, never overwritten.</li>
+      <li><strong>Focus timer</strong>Pomodoro-style sessions from any task, with a timer in the menu bar. It stays correct through sleep and restarts, and it never marks a task done for you.</li>
+      <li><strong>Reminders</strong>Before time blocks and deadlines, each sent only once. Reopening the app never floods you with old ones.</li>
+      <li><strong>Your order or its order</strong>Pin tasks to keep them on top, or switch to Manual order, which never reshuffles.</li>
+      <li><strong>Offline and private</strong>One SQLite file on your Mac. No account, no server, no API keys. Export and import a JSON backup at any time.</li>
+    </ul>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Under the hood</p>
+    <h2>Two decisions I'm happy with</h2>
+    <div class="two">
+      <div class="prose">
+        <p><strong>Deadlines stay where you put them.</strong> A due date is stored as a local wall-clock value ("Friday", "3:00 PM"), not a UTC timestamp. So "Friday 3pm" is still Friday at 3pm after a daylight-saving change or a trip to another time zone.</p>
+      </div>
+      <div class="prose">
+        <p><strong>A timer that can't drift.</strong> The focus timer never counts down in memory. It stores when the session started and works out the time left from that, so closing the lid, hiding the window or restarting the app doesn't throw it off.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Keyboard</p>
+    <h2>Built for the keyboard</h2>
+    <table class="keys">
+      <tbody>{keys.map(([a, k]) => <tr><td>{a}</td><td><kbd>{k}</kbd></td></tr>)}</tbody>
+    </table>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Build it yourself</p>
+    <h2>Run it on your Mac</h2>
+    <div class="prose">
+      <p>You'll need macOS 14 or later, Node 22+, and the <a href="https://tauri.app/start/prerequisites/" target="_blank" rel="noopener">Tauri prerequisites</a> (the Rust toolchain and the Xcode Command Line Tools).</p>
+    </div>
+    <pre><code>git clone https://github.com/Eitan-Alperstein/tempo
+cd tempo
+npm install
+npm run tauri dev     # run the app
+npm run tauri build   # build Tempo.app and a .dmg</code></pre>
+  </section>
+</Showcase>
+
+<script>
+  import { startTempoDemos } from "../scripts/tempo-demo";
+  startTempoDemos();
+</script>
+
+<style is:global>
+  /* Global because the demo script builds most of these elements; this CSS only loads on /tempo. */
+  /* Score part colors, shared by the legend and the bars. */
+  .c-imp { background: var(--accent); }
+  .c-urg { background: #f2b366; }
+  .c-over { background: #f07878; }
+  .c-fit { background: #6fcf9b; }
+
+  /* Quick add */
+  .qa { max-width: 760px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 20px; }
+  .qa-bar { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 12px; padding: 6px 6px 6px 14px; transition: border-color .2s; }
+  .qa-bar:focus-within { border-color: var(--accent); }
+  .qa-plus { color: var(--accent); font: 500 18px/1 var(--mono); }
+  .qa-bar input { flex: 1; min-width: 0; background: none; border: 0; color: var(--ink); font: 400 16px/1.4 var(--sans); padding: 8px 0; outline: none; }
+  .qa-bar button { flex: none; height: 38px; padding: 0 14px; border-radius: 9px; border: 0; background: var(--accent); color: var(--accent-ink); font: 600 13.5px/1 var(--sans); cursor: pointer; }
+  .qa-bar button:disabled { opacity: .4; cursor: default; }
+  .qa-out { padding: 18px 4px 4px; min-height: 120px; }
+  .qa-title { margin: 0; font-size: 19px; font-weight: 600; color: var(--ink); }
+  .qa-title.empty { color: var(--muted); font-weight: 400; }
+  .qa-fields { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .qa-fields li { display: inline-flex; gap: 8px; align-items: baseline; border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 12px; font-size: 14px; }
+  .f-label { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .f-value { color: var(--ink); }
+  .qa-notes { margin: 14px 0 0; padding-left: 18px; color: #f2b366; font-size: 14px; }
+  .qa-notes li + li { margin-top: 4px; }
+  .qa-status { margin: 12px 0 0; font: 500 13px/1.4 var(--mono); color: #6fcf9b; min-height: 1em; }
+  .qa-examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .qa-examples span { font: 500 12px/1 var(--mono); color: var(--muted); margin-right: 4px; }
+  .qa-examples button { font: 400 12.5px/1 var(--mono); color: var(--ink-soft); background: none; border: 1px solid var(--line-strong); border-radius: 999px; padding: 7px 10px; cursor: pointer; transition: border-color .2s, color .2s; }
+  .qa-examples button:hover { border-color: var(--accent); color: var(--ink); }
+
+  /* Ranking */
+  .formula { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 4px 0 22px; font: 400 13px/1 var(--mono); color: var(--ink-soft); }
+  .formula span { display: inline-flex; align-items: center; gap: 8px; }
+  .formula i { width: 10px; height: 10px; border-radius: 3px; }
+  .free { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; max-width: 760px; margin-bottom: 16px; font-size: 15px; color: var(--ink-soft); }
+  .free input { flex: 1; min-width: 160px; accent-color: var(--accent); }
+  .free output { font: 500 14px/1 var(--mono); color: var(--ink); min-width: 64px; text-align: right; }
+  .t-list { list-style: none; padding: 0; margin: 0; max-width: 760px; display: grid; gap: 10px; }
+  .t-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 14px; align-items: start; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; transition: border-color .4s; }
+  .t-row.fresh { border-color: #6fcf9b; }
+  .t-rank { font: 500 14px/24px var(--mono); color: var(--muted); }
+  .t-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .t-title { font-weight: 600; color: var(--ink); line-height: 24px; overflow-wrap: anywhere; }
+  .t-remove { flex: none; font: 400 12px/1 var(--mono); color: var(--muted); background: none; border: 0; cursor: pointer; padding: 4px; }
+  .t-remove:hover { color: #f07878; }
+  .t-reasons { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
+  .t-bar { display: flex; height: 6px; border-radius: 3px; background: var(--surface); overflow: hidden; margin: 12px 0; }
+  .t-bar i { display: block; height: 100%; transition: width .35s cubic-bezier(.2,.7,.2,1); }
+  .t-controls { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 13px; color: var(--muted); }
+  .t-ctl { display: inline-flex; align-items: center; gap: 8px; }
+  .t-ctl select { background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 8px; padding: 5px 8px; font: 400 13px/1.2 var(--sans); }
+  .t-dots { display: inline-flex; gap: 4px; }
+  .t-dots button { width: 14px; height: 14px; padding: 0; border-radius: 50%; border: 1px solid var(--line-strong); background: none; cursor: pointer; }
+  .t-dots button.on { background: var(--accent); border-color: var(--accent); }
+  .t-score { font: 600 22px/24px var(--mono); color: var(--ink); min-width: 2ch; text-align: right; }
+  .explain { margin-top: 28px; }
+  @media (max-width: 520px) {
+    .qa { padding: 14px; }
+    .qa-bar button { padding: 0 10px; font-size: 12.5px; }
+    .t-row { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 10px; padding: 14px; }
+  }
+
+  /* Keyboard */
+  .keys { border-collapse: collapse; font-size: 15px; width: 100%; max-width: 560px; }
+  .keys td { padding: 10px 12px 10px 0; border-top: 1px solid var(--line); color: var(--ink-soft); }
+  .keys td:last-child { text-align: right; }
+  kbd { font: 500 13px/1 var(--mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 6px; padding: 5px 8px; }
+</style>

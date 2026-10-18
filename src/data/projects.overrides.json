@@ -27,6 +27,9 @@
     },
     "lloyd": {
       "title": "Lloyd Relaxation"
+    },
+    "tempo": {
+      "url": "/tempo"
     }
   },
   "private": [
