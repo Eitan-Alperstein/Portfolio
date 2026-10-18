@@ -110,7 +110,6 @@ export const paw = {
   // written; a null value shows a "coming soon" card.
   stats: [
     { value: "6.53k", label: "impressions in my first 3 months as business & ad manager" },
-    { value: "262", label: "clicks in those 3 months" },
     { value: "+257%", label: "growth in clicks over those 3 months" },
     { value: "10+", label: "articles published since I took over" },
   ] as { value: string | null; label: string }[],
