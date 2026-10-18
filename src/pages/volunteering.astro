@@ -1,0 +1,80 @@
+---
+import Page from "../layouts/Page.astro";
+import { volunteering as v } from "../data/life";
+---
+<Page
+  title="Volunteering"
+  eyebrow="Volunteering · Community"
+  heading="Showing up, <span>mostly at Chabad.</span>"
+  tagline={v.intro}
+  description="Eitan Alperstein's volunteering: 40+ hours with Chabad in Denver, including founding the CTeen program at Chabad of Central Park."
+>
+  <section class="wrap block">
+    <div class="hours">
+      <b><span data-count={v.hours}>{v.hours}</span>+</b>
+      <p>hours volunteering with Chabad</p>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">What I've done</p>
+    <h2>With Chabad</h2>
+    <div class="items">
+      {v.items.map((x) => (
+        <article class="item">
+          <p class="where">{x.where}</p>
+          <h3>{x.title}</h3>
+          <p>{x.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Up next</p>
+    <h2>Starting soon</h2>
+    <div class="items">
+      {v.upcoming.map((x) => (
+        <article class="item next">
+          <span class="badge">Starting soon</span>
+          <h3>{x.title}</h3>
+          <p>{x.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Page>
+
+<script>
+  const el = document.querySelector<HTMLElement>("[data-count]");
+  if (el && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const target = Number(el.dataset.count);
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const p = Math.min(1, (now - t0) / 1200), eased = 1 - (1 - p) ** 3;
+        el.textContent = String(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+    io.observe(el);
+  }
+</script>
+
+<style>
+  .hours { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 24px; padding: 40px;
+    background: radial-gradient(60% 100% at 0% 0%, rgba(159,177,255,0.14), transparent 60%), var(--bg-raised); }
+  .hours b { font-size: clamp(72px, 12vw, 128px); line-height: .9; letter-spacing: -0.06em; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .hours p { margin: 0; font-size: 18px; color: var(--ink-soft); }
+  .items { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
+  .item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 26px; display: grid; gap: 8px; align-content: start; }
+  .item.next { border-style: dashed; border-color: var(--line-strong); }
+  .where { margin: 0; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .item h3 { margin: 0; font-size: 21px; letter-spacing: -0.02em; }
+  .item p { margin: 0; color: var(--ink-soft); }
+  .badge { justify-self: start; font: 500 11px/1 var(--mono); color: var(--accent); border: 1px solid rgba(159,177,255,.45); padding: 6px 9px; border-radius: 999px; }
+  @media (max-width: 760px) { .items { grid-template-columns: 1fr; } .hours { padding: 28px; } }
+</style>

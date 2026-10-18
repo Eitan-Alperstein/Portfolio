@@ -1,11 +1,15 @@
 ---
 import { NOW, PHOTO } from "../data/site";
+import { listShots } from "../lib/shots";
+
+// An explicit PHOTO wins; otherwise use the first image in public/shots/profile/.
+const photo = PHOTO ?? listShots("profile")[0] ?? null;
 ---
 <section id="about" class="wrap">
   <div class="grid">
     <div class="portrait" data-reveal>
-      {PHOTO
-        ? <img src={PHOTO} alt="Eitan Alperstein" width="480" height="600" loading="lazy" />
+      {photo
+        ? <img src={photo} alt="Eitan Alperstein" width="480" height="600" loading="lazy" />
         : <div class="mono" aria-hidden="true"><span>EA</span></div>}
     </div>
     <div class="text">
@@ -13,13 +17,13 @@ import { NOW, PHOTO } from "../data/site";
       <h2 class="title" data-reveal style="--d: 60ms">Hi, I'm Eitan.</h2>
       <div class="prose" data-reveal style="--d: 120ms">
         <p>
-          I'm a junior in high school in Denver (class of 2028). I like making stuff for the sake of making stuff. Usually that means an idea turns into a working app by the end of the weekend.
+          I'm a junior at Denver Jewish Day School (class of 2028). I like making stuff for the sake of making stuff, and that doesn't stop at code.
         </p>
         <p>
-          A lot of what I build is for students, because that's who I am: practice tools for the SAT and AP Lang, a final-grade calculator, and the website for <strong>The Paw</strong>, my school's student newspaper, where I'm lead developer. The rest is simulations and experiments, like Voronoi diagrams on a sphere or 3D projection from scratch, mostly because I wanted to see how they work.
+          I build apps, tools and simulations, mostly for students like me. I taught myself guitar and built a pedal to chase a Dire Straits tone. I tutor math, from elementary school through Calculus II. At <strong>The Paw</strong>, my school's student newspaper, I write articles, run the business and advertising side, and overhauled the website.
         </p>
         <p>
-          I also competed in the <strong>2025 NASA App Development Challenge</strong> with Team Space Lazer.
+          I speak English and Hebrew, I'm a Spanish teaching assistant, and I've started Russian, French and Arabic for fun. I also founded the CTeen program at my local Chabad and competed in the <strong>2025 NASA App Development Challenge</strong> with Team Space Lazer.
         </p>
       </div>
 

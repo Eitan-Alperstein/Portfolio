@@ -93,3 +93,17 @@ h2.title {
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
+
+/* Shared building blocks for inner pages (showcases, life pages). */
+  .page .block { margin-top: 110px; }
+  .page .block h2 { font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -0.03em; font-weight: 650; margin: 16px 0 28px; }
+  .page .features { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+  .page .features li { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; color: var(--ink-soft); font-size: 15px; }
+  .page .features strong { display: block; color: var(--ink); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .page .prose { color: var(--ink-soft); font-size: 16.5px; max-width: 720px; }
+  .page .prose p { margin: 0 0 16px; }
+  .page .prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .page .prose code, .page td code { font: 400 0.9em var(--mono); color: var(--ink); background: var(--surface); padding: 2px 6px; border-radius: 5px; }
+  .page pre { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; overflow-x: auto; font: 400 13.5px/1.7 var(--mono); color: var(--ink); margin: 0; }
+  .page .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .page .two { grid-template-columns: 1fr; } }

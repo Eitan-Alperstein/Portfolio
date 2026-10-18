@@ -1,0 +1,44 @@
+---
+// The placeholder every empty content slot uses. `kind` picks the little
+// illustration: image frames, an audio waveform, a quote, or a stat.
+interface Props { label: string; hint?: string; kind?: "images" | "audio" | "quote" | "stat" }
+const { label, hint, kind = "images" } = Astro.props;
+const bars = [6, 14, 22, 12, 28, 18, 9, 24, 16, 30, 12, 20, 8, 26, 14, 10, 22, 16];
+---
+<div class={`soon ${kind}`}>
+  <div class="art" aria-hidden="true">
+    {kind === "images" && <div class="frames"><span></span><span></span><span></span></div>}
+    {kind === "audio" && <div class="wave">{bars.map((h, i) => <span style={`--h:${h}px; --i:${i}`}></span>)}</div>}
+    {kind === "quote" && <div class="quote">“</div>}
+    {kind === "stat" && <div class="stat">—</div>}
+  </div>
+  <p class="label">{label}</p>
+  {hint && <p class="hint">{hint}</p>}
+</div>
+
+<style>
+  .soon {
+    border: 1px dashed var(--line-strong); border-radius: var(--radius);
+    padding: 40px 24px; display: grid; justify-items: center; gap: 12px; text-align: center;
+    background: var(--bg-raised);
+  }
+  .label { margin: 4px 0 0; color: var(--ink-soft); font: 500 13px/1.5 var(--mono); }
+  .hint { margin: 0; color: var(--muted); font-size: 13.5px; max-width: 420px; }
+  .art { min-height: 56px; display: grid; place-items: center; }
+  .frames { display: flex; gap: 10px; }
+  .frames span, .wave span {
+    background: linear-gradient(110deg, var(--surface) 30%, rgba(159,177,255,0.1) 50%, var(--surface) 70%) 0 0 / 300% 100%;
+    animation: shimmer 2.8s infinite linear;
+  }
+  .frames span { width: 88px; aspect-ratio: 16 / 10; border-radius: 8px; border: 1px solid var(--line-strong); }
+  .frames span:nth-child(2) { animation-delay: .3s; }
+  .frames span:nth-child(3) { animation-delay: .6s; }
+  .wave { display: flex; align-items: center; gap: 4px; height: 40px; }
+  .wave span { width: 4px; height: var(--h); border-radius: 2px; background: var(--line-strong); animation: pulse 1.8s ease-in-out infinite; animation-delay: calc(var(--i) * 80ms); }
+  .quote { font: 700 64px/0.6 Georgia, serif; color: var(--line-strong); padding-top: 22px; }
+  .stat { font: 600 40px/1 var(--sans); color: var(--line-strong); }
+  @keyframes shimmer { from { background-position: 100% 0; } to { background-position: -200% 0; } }
+  @keyframes pulse { 0%, 100% { opacity: .45; transform: scaleY(.7); } 50% { opacity: 1; transform: scaleY(1); } }
+  @media (prefers-reduced-motion: reduce) { .frames span, .wave span { animation: none; } }
+  @media (max-width: 480px) { .frames span { width: 70px; } }
+</style>

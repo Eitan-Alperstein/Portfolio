@@ -1,0 +1,69 @@
+---
+import Arrow from "./Arrow.astro";
+import { paw, tutoring, volunteering, languages, academics } from "../data/life";
+
+const scores = academics.years.flatMap((y) => y.courses).filter((c) => c.score).map((c) => c.score);
+const fives = scores.filter((s) => s === 5).length;
+const apLine = fives === scores.length ? `5s on all ${scores.length} AP exams so far.` : `${fives} AP exams with a 5.`;
+
+const cards = [
+  { href: "/music", title: "Music", text: "Self-taught guitar, every style, plus a pedal I built to model the Money for Nothing tone.", icon: "music" },
+  { href: "/tutoring", title: "Math tutoring", text: `${tutoring.facts[1].value}. Paid, one-on-one, and taking new students.`, icon: "tutor", badge: "Taking students" },
+  { href: "/the-paw", title: "The Paw", text: `Reporter (${paw.articlesWritten} articles), Business & Advertising Manager, and the paper's web developer.`, icon: "paw" },
+  { href: "/academics", title: "Academics", text: `AP and honors math, science, history and Spanish. ${apLine}`, icon: "school" },
+  { href: "/languages", title: "Languages", text: `${languages.list.length} languages at various levels, from native to "just started".`, icon: "lang" },
+  { href: "/volunteering", title: "Volunteering", text: `${volunteering.hours}+ hours with Chabad, including founding a CTeen chapter.`, icon: "heart" },
+];
+---
+<section id="beyond" class="wrap">
+  <p class="eyebrow" data-reveal>Beyond code</p>
+  <h2 class="title" data-reveal style="--d: 60ms">The rest of what I do.</h2>
+  <p class="title-sub" data-reveal style="--d: 120ms">Music, teaching, writing, school, languages and community. Each one has its own page.</p>
+
+  <div class="grid">
+    {cards.map((c, i) => (
+      <a class="card" href={c.href} data-reveal style={`--d: ${(i % 3) * 70}ms`}>
+        <div class="top">
+          <span class="icon" aria-hidden="true">
+            {c.icon === "music" && <svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="17" cy="16" r="3" /></svg>}
+            {c.icon === "tutor" && <svg viewBox="0 0 24 24"><path d="M4 19h16M6 15l4-9 4 9M7.6 11.5h4.8M17 7v6M14 10h6" /></svg>}
+            {c.icon === "paw" && <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h3M8 15h3M14 11h2v4h-2z" /></svg>}
+            {c.icon === "school" && <svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z" /><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" /></svg>}
+            {c.icon === "lang" && <svg viewBox="0 0 24 24"><path d="M4 5h9M8.5 3v2M6 5c0 4 3 7 6 8M11 5c0 3-2 7-6 9" /><path d="M13 21l4-9 4 9M14.5 18h5" /></svg>}
+            {c.icon === "heart" && <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>}
+          </span>
+          {c.badge && <span class="badge">{c.badge}</span>}
+        </div>
+        <h3>{c.title}</h3>
+        <p>{c.text}</p>
+        <span class="go">Open <Arrow /></span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; gap: 16px; margin-top: 48px; grid-template-columns: repeat(3, 1fr); }
+  .card {
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 10px; padding: 26px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius);
+    transition: border-color .3s, transform .3s, background .3s;
+  }
+  .card::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+    background: radial-gradient(70% 80% at 100% 0%, rgba(159,177,255,0.12), transparent 60%);
+  }
+  .card:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .card:hover::after { opacity: 1; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+  .icon svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .badge { font: 500 11px/1 var(--mono); color: var(--accent); border: 1px solid rgba(159,177,255,.45); padding: 6px 9px; border-radius: 999px; }
+  h3 { margin: 0; font-size: 20px; letter-spacing: -0.02em; font-weight: 650; }
+  p { margin: 0; color: var(--ink-soft); font-size: 15px; flex: 1; }
+  .go { font: 500 13px/1 var(--mono); display: inline-flex; gap: 6px; align-items: center; margin-top: 6px; color: var(--ink); }
+  .card:hover .go { color: var(--accent); }
+  @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .card { padding: 22px; } }
+</style>

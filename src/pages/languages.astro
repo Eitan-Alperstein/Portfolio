@@ -1,0 +1,70 @@
+---
+import Page from "../layouts/Page.astro";
+import { languages as l } from "../data/life";
+---
+<Page
+  title="Languages"
+  eyebrow="Languages · A hobby"
+  heading={`<span class="hello" data-hello aria-live="off">Hello</span>, in ${l.list.length} languages.`}
+  tagline={l.intro}
+  description="The languages Eitan Alperstein speaks and is learning: English, Hebrew, Spanish, Russian, French and Arabic."
+>
+  <section class="wrap block">
+    <div class="langs">
+      {l.list.map((x, i) => (
+        <article class="lang" style={`--p:${x.pct}%; --d:${i * 70}ms`} data-reveal>
+          <div class="top">
+            <div>
+              <h3>{x.name}</h3>
+              <p class="native"><bdi dir={x.dir}>{x.native}</bdi></p>
+            </div>
+            <span class="hi" dir={x.dir}>{x.hello}</span>
+          </div>
+          <div class="meter" role="img" aria-label={`${x.name}: ${x.level}`}><span></span></div>
+          <div class="bottom">
+            <span class="level">{x.level}</span>
+            {x.note && <span class="note">{x.note}</span>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Page>
+
+<script define:vars={{ hellos: l.list.map((x) => ({ w: x.hello, dir: x.dir || "ltr" })) }}>
+  const el = document.querySelector("[data-hello]");
+  if (el && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let i = 0;
+    setInterval(() => {
+      el.classList.add("out");
+      setTimeout(() => {
+        i = (i + 1) % hellos.length;
+        el.textContent = hellos[i].w; el.dir = hellos[i].dir;
+        el.classList.remove("out");
+      }, 280);
+    }, 2200);
+  }
+</script>
+
+<style>
+  :global(.hello) { display: inline-block; color: var(--accent) !important; transition: opacity .28s, transform .28s; }
+  :global(.hello.out) { opacity: 0; transform: translateY(-8px); }
+  .langs { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
+  .lang { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 24px; display: grid; gap: 16px; transition: border-color .3s, transform .3s; }
+  .lang:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .top { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+  h3 { margin: 0; font-size: 20px; letter-spacing: -0.02em; }
+  .native { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+  .hi { font-size: 22px; font-weight: 600; color: var(--ink-soft); opacity: .35; transition: opacity .3s, color .3s; }
+  .lang:hover .hi { opacity: 1; color: var(--accent); }
+  .meter { height: 6px; border-radius: 999px; background: var(--surface); overflow: hidden; }
+  .meter span { display: block; height: 100%; width: var(--p); border-radius: inherit; background: linear-gradient(90deg, rgba(159,177,255,.5), var(--accent)); transform-origin: left; }
+  :global(.js) .lang[data-reveal] .meter span { transform: scaleX(0); transition: transform 1.1s cubic-bezier(.2,.7,.2,1) calc(var(--d) + 200ms); }
+  :global(.js) .lang[data-reveal]:global(.in) .meter span { transform: scaleX(1); }
+  .bottom { display: grid; gap: 6px; }
+  .level { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .note { color: var(--ink-soft); font-size: 14.5px; }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .lang[data-reveal] .meter span { transform: none; transition: none; } }
+  @media (max-width: 960px) { .langs { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .langs { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,36 @@
+---
+// Shell for the "life" pages (music, tutoring, The Paw, ...): nav, a page
+// header, then whatever sections the page adds.
+import Layout from "./Layout.astro";
+import Nav from "../components/Nav.astro";
+
+interface Props { title: string; eyebrow: string; heading: string; tagline: string; description: string }
+const { title, eyebrow, heading, tagline, description } = Astro.props;
+---
+<Layout title={`${title} | Eitan Alperstein`} description={description}>
+  <Nav />
+  <main class="page">
+    <header class="wrap head">
+      <p class="eyebrow" data-reveal>{eyebrow}</p>
+      <h1 data-reveal style="--d: 60ms" set:html={heading} />
+      <p class="tagline" data-reveal style="--d: 120ms">{tagline}</p>
+      <div class="extra" data-reveal style="--d: 180ms"><slot name="head" /></div>
+    </header>
+    <slot />
+  </main>
+  <footer class="wrap foot">
+    <a href="/" data-home class="link-arrow">← Home</a>
+    <span>© {new Date().getFullYear()} Eitan Alperstein</span>
+  </footer>
+</Layout>
+
+<style>
+  .head { padding-top: 150px; }
+  h1 { font-size: clamp(42px, 7vw, 80px); line-height: 1; letter-spacing: -0.045em; font-weight: 680; margin: 20px 0 0; max-width: 900px; text-wrap: balance; }
+  h1 :global(span) { color: var(--muted); }
+  .tagline { font-size: clamp(18px, 2vw, 21px); color: var(--ink-soft); max-width: 660px; margin: 22px 0 0; }
+  .extra:empty { display: none; }
+  .extra { margin-top: 30px; }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 120px; padding-bottom: 48px; color: var(--muted); font-size: 13.5px; }
+  @media (max-width: 640px) { .head { padding-top: 120px; } }
+</style>

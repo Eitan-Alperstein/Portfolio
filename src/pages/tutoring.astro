@@ -1,0 +1,161 @@
+---
+import Page from "../layouts/Page.astro";
+import ComingSoon from "../components/ComingSoon.astro";
+import { tutoring as t } from "../data/life";
+
+const body = "Hi Eitan,\n\nI'm interested in math tutoring.\n\nStudent's grade:\nWhat they're working on:\nTimes that work:\n\nThanks!";
+const mailto = (subject: string) => `mailto:${t.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+---
+<Page
+  title="Math Tutoring"
+  eyebrow="Math tutoring · Taking students"
+  heading="Math tutoring, <span>from counting to Calc II.</span>"
+  tagline={t.pitch}
+  description="Paid one-on-one math tutoring with Eitan Alperstein, from elementary school math through Calculus II. SAT math coming soon."
+>
+  <div slot="head" class="head-cta">
+    <a class="btn primary" href={mailto(t.subject)}>Get in touch</a>
+    <div class="facts">{t.facts.map((f) => <div><span>{f.label}</span><b>{f.value}</b></div>)}</div>
+  </div>
+
+  <section class="wrap block">
+    <p class="eyebrow">Levels</p>
+    <h2>Pick your level</h2>
+    <div class="picker" data-picker>
+      <div class="tabs" role="tablist" aria-label="Tutoring levels">
+        {t.levels.map((l, i) => (
+          <button type="button" role="tab" id={`tab-${l.id}`} aria-controls={`panel-${l.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} data-level={l.id} data-name={l.name}>
+            <span class="lname">{l.name}</span>
+            <span class="lgrade">{l.grades}</span>
+          </button>
+        ))}
+      </div>
+      {t.levels.map((l, i) => (
+        <div class="panel" role="tabpanel" id={`panel-${l.id}`} aria-labelledby={`tab-${l.id}`} hidden={i !== 0}>
+          <div class="panel-head">
+            <h3>{l.name} {l.soon && <span class="soon">Coming soon</span>}</h3>
+            <p>{l.soon ? "I'm getting SAT math tutoring ready. Email me to be first in line." : `What we can work on (${l.grades}):`}</p>
+          </div>
+          <ul>{l.topics.map((x) => <li>{x}</li>)}</ul>
+          <a class="btn" href={mailto(`${t.subject}: ${l.name}`)}>{l.soon ? "Get on the list" : `Ask about ${l.name}`} →</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Who it's for</p>
+    <h2>Good fit if you're…</h2>
+    <ul class="features">{t.whoFor.map((w) => <li><strong>{w.title}</strong>{w.text}</li>)}</ul>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">How it works</p>
+    <h2>Three steps</h2>
+    <ol class="steps">{t.steps.map((s, i) => <li><span class="n">0{i + 1}</span><div><strong>{s.title}</strong><p>{s.text}</p></div></li>)}</ol>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Kind words</p>
+    <h2>What families say</h2>
+    {t.testimonials.length > 0 ? (
+      <div class="quotes">{t.testimonials.map((q) => <figure><blockquote>“{q.quote}”</blockquote><figcaption>{q.name}</figcaption></figure>)}</div>
+    ) : (
+      <ComingSoon kind="quote" label="Testimonials coming soon." />
+    )}
+  </section>
+
+  <section class="wrap block">
+    <div class="cta-box">
+      <h2>Want to start?</h2>
+      <p>Send me an email with the student's grade, what they're working on and when you're free. I'll get back to you soon.</p>
+      <a class="btn primary" href={mailto(t.subject)}>Email {t.email}</a>
+    </div>
+  </section>
+</Page>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-picker]");
+  if (root) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>("[role=tab]")];
+    const select = (tab: HTMLButtonElement, focus = false) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")!)!.hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t));
+      t.addEventListener("keydown", (e) => {
+        const d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+        if (d) { e.preventDefault(); select(tabs[(i + d + tabs.length) % tabs.length], true); }
+      });
+    });
+  }
+</script>
+
+<style>
+  .head-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 12px; }
+  .facts div { border: 1px solid var(--line); background: var(--bg-raised); border-radius: 12px; padding: 12px 16px; display: grid; gap: 4px; }
+  .facts span { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .facts b { font-weight: 600; font-size: 15px; }
+  .btn {
+    display: inline-flex; align-items: center; height: 46px; padding: 0 20px; border-radius: 999px;
+    border: 1px solid var(--line-strong); font-size: 15px; font-weight: 500; transition: border-color .2s, background .2s, transform .2s;
+  }
+  .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+  .picker { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 18px; }
+  .picker > * { min-width: 0; }
+  .tabs { display: grid; gap: 8px; align-content: start; }
+  .tabs button {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px; text-align: left;
+    padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-raised);
+    color: var(--ink-soft); font: inherit; cursor: pointer; transition: border-color .2s, background .2s, color .2s;
+  }
+  .tabs button:hover { border-color: var(--line-strong); color: var(--ink); }
+  .tabs button[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+  .lname { font-weight: 600; font-size: 15px; }
+  .lgrade { font: 400 12px/1 var(--mono); color: var(--muted); white-space: nowrap; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 30px; display: grid; gap: 20px; align-content: start; animation: in .35s ease; }
+  .panel[hidden] { display: none; }
+  @keyframes in { from { opacity: 0; transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .panel { animation: none; } }
+  .panel-head h3 { margin: 0; font-size: 26px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .panel-head p { margin: 8px 0 0; color: var(--muted); }
+  .soon { font: 500 11px/1 var(--mono); color: var(--accent); border: 1px solid rgba(159,177,255,.45); padding: 6px 9px; border-radius: 999px; }
+  .panel ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+  .panel li { padding: 12px 14px; border-radius: 10px; background: var(--surface); color: var(--ink-soft); font-size: 15px; }
+  .panel li::before { content: "→ "; color: var(--accent); }
+  .panel .btn { justify-self: start; }
+
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+  .steps li { display: flex; gap: 16px; padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-raised); }
+  .n { font: 500 13px/1.6 var(--mono); color: var(--accent); }
+  .steps strong { display: block; font-size: 16px; margin-bottom: 6px; }
+  .steps p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+  .quotes { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  figure { margin: 0; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); }
+  blockquote { margin: 0; font-size: 17px; color: var(--ink); }
+  figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; }
+
+  .cta-box { border: 1px solid var(--line); border-radius: 24px; padding: 56px; text-align: center; display: grid; justify-items: center; gap: 14px;
+    background: radial-gradient(60% 90% at 50% 0%, rgba(159,177,255,0.14), transparent 60%), var(--bg-raised); }
+  .cta-box h2 { margin: 0 !important; }
+  .cta-box p { margin: 0 0 8px; color: var(--ink-soft); max-width: 520px; }
+  .cta-box .btn.primary { max-width: 100%; overflow-wrap: anywhere; height: auto; min-height: 46px; padding: 10px 20px; text-align: center; }
+
+  @media (max-width: 860px) {
+    .picker { grid-template-columns: minmax(0, 1fr); }
+    .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tabs button { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) { .panel { padding: 22px; } .cta-box { padding: 36px 20px; } }
+</style>

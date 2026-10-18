@@ -9,9 +9,9 @@ import SphereArt from "./art/SphereArt.astro";
 const art = { "the-paw": PaperArt, "tab-teacher": TabArt, "spherical-voronoi": SphereArt } as const;
 const hero = projects.filter((p) => p.hero).sort((a, b) => a.hero! - b.hero!);
 ---
-<section id="work" class="wrap">
-  <p class="eyebrow" data-reveal>Selected work</p>
-  <h2 class="title" data-reveal style="--d: 60ms">Three things I'm proud of.</h2>
+<section id="code" class="wrap">
+  <p class="eyebrow" data-reveal>Code</p>
+  <h2 class="title" data-reveal style="--d: 60ms">Three projects I'm proud of.</h2>
 
   <div class="featured">
     {hero.map((p, i) => {

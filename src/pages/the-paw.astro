@@ -1,0 +1,98 @@
+---
+import Page from "../layouts/Page.astro";
+import Arrow from "../components/Arrow.astro";
+import ComingSoon from "../components/ComingSoon.astro";
+import { paw } from "../data/life";
+---
+<Page
+  title="The Paw"
+  eyebrow="Journalism · Business · Web"
+  heading="The Paw, <span>my school's newspaper.</span>"
+  tagline={paw.summary}
+  description="Eitan Alperstein at The Paw, Denver Jewish Day School's student newspaper: reporter, Business & Advertising Manager, and web developer."
+>
+  <div slot="head" class="head-links">
+    <a class="btn" href={paw.site} target="_blank" rel="noopener">Read The Paw <Arrow /></a>
+    <a class="btn ghost" href={paw.archive} target="_blank" rel="noopener">Archives <Arrow /></a>
+  </div>
+
+  <section class="wrap block">
+    <div class="stats">
+      <div class="stat"><b>{paw.articlesWritten}</b><span>articles written</span></div>
+      <div class="stat"><b>{paw.roles.length}</b><span>roles on staff</span></div>
+      {paw.adRevenue
+        ? <div class="stat"><b>{paw.adRevenue.amount}</b><span>ad revenue, {paw.adRevenue.period}</span></div>
+        : <div class="stat pending"><b>—</b><span>yearly ad revenue · coming soon</span></div>}
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">What I do</p>
+    <h2>Three jobs at one paper</h2>
+    <ol class="timeline">
+      {paw.roles.map((r) => (
+        <li>
+          <span class="dot" aria-hidden="true"></span>
+          <p class="when">{r.when}</p>
+          <h3>{r.title}</h3>
+          <p>{r.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Writing</p>
+    <h2>Articles</h2>
+    {paw.articles.length > 0 ? (
+      <ul class="articles">
+        {paw.articles.map((a) => (
+          <li>
+            <a href={a.url} target="_blank" rel="noopener">
+              <span class="when">{a.when}</span>
+              <span class="t">{a.title}{a.coAuthors && <em> {a.coAuthors}</em>}</span>
+              <Arrow />
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <ComingSoon label="Articles coming soon." />
+    )}
+    <p class="more">More of my work is in <a href={paw.archive} target="_blank" rel="noopener">The Paw's archives</a>.</p>
+  </section>
+</Page>
+
+<style>
+  .head-links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px; border-radius: 999px; font-size: 15px; font-weight: 500;
+    background: var(--ink); color: var(--bg); border: 1px solid var(--ink); transition: background .2s, border-color .2s; }
+  .btn:hover { background: var(--accent); border-color: var(--accent); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn.ghost:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .stat { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 26px; display: grid; gap: 8px; }
+  .stat b { font-size: clamp(36px, 5vw, 52px); letter-spacing: -0.04em; font-weight: 680; line-height: 1; }
+  .stat span { color: var(--muted); font-size: 14.5px; }
+  .stat.pending { border-style: dashed; border-color: var(--line-strong); }
+  .stat.pending b { color: var(--line-strong); }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 26px; border-left: 1px solid var(--line-strong); display: grid; gap: 34px; max-width: 760px; }
+  .timeline li { position: relative; }
+  .timeline .dot { position: absolute; left: -32px; top: 4px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+  .timeline .when { margin: 0; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .timeline h3 { margin: 8px 0 6px; font-size: 21px; letter-spacing: -0.02em; }
+  .timeline p { margin: 0; color: var(--ink-soft); }
+  .articles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .articles a { display: grid; grid-template-columns: 100px 1fr auto; gap: 20px; align-items: baseline; padding: 18px 8px; border-bottom: 1px solid var(--line); transition: background .25s; }
+  .articles a:hover { background: linear-gradient(90deg, var(--accent-soft), transparent 70%); }
+  .articles .when { font: 400 12.5px/1.4 var(--mono); color: var(--muted); }
+  .articles .t { font-size: 17px; font-weight: 500; }
+  .articles em { font-style: normal; color: var(--muted); font-weight: 400; font-size: 15px; }
+  .more { margin: 22px 0 0; color: var(--muted); }
+  .more a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  @media (max-width: 700px) {
+    .stats { grid-template-columns: 1fr; }
+    .articles a { grid-template-columns: 1fr auto; gap: 6px 14px; }
+    .articles .when { grid-column: 1 / -1; }
+  }
+</style>

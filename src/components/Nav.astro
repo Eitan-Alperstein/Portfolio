@@ -1,5 +1,16 @@
 ---
 import { EMAIL } from "../data/site";
+
+const links = [
+  { href: "/#code", label: "Code" },
+  { href: "/music", label: "Music" },
+  { href: "/tutoring", label: "Tutoring" },
+  { href: "/the-paw", label: "The Paw" },
+  { href: "/academics", label: "Academics" },
+  { href: "/languages", label: "Languages" },
+  { href: "/volunteering", label: "Volunteering" },
+];
+const here = Astro.url.pathname.replace(/\/$/, "");
 ---
 <header class="nav">
   <div class="wrap row">
@@ -7,11 +18,15 @@ import { EMAIL } from "../data/site";
       <img src="/favicon.svg" alt="" width="22" height="22" />
       <span>Eitan Alperstein</span>
     </a>
-    <nav aria-label="Primary">
-      <a href="/#work" data-home>Work</a>
-      <a href="/#about" data-home>About</a>
+    <nav aria-label="Primary" id="site-menu">
+      {links.map((l) => (
+        <a href={l.href} data-home aria-current={here === l.href ? "page" : undefined}>{l.label}</a>
+      ))}
       <a href={`mailto:${EMAIL}`} class="cta">Say hi</a>
     </nav>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="site-menu">
+      <span class="sr">Menu</span><i></i><i></i>
+    </button>
   </div>
 </header>
 
@@ -23,6 +38,15 @@ import { EMAIL } from "../data/site";
       a.href = "https://www.eitanalperstein.com" + a.getAttribute("href");
     });
   }
+  (() => {
+    const btn = document.querySelector(".nav .menu");
+    const nav = document.getElementById("site-menu");
+    if (!btn || !nav) return;
+    const set = (open) => { btn.setAttribute("aria-expanded", String(open)); document.documentElement.classList.toggle("menu-open", open); };
+    btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
+    nav.addEventListener("click", (e) => { if (e.target.closest("a")) set(false); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") set(false); });
+  })();
 </script>
 
 <style>
@@ -34,13 +58,37 @@ import { EMAIL } from "../data/site";
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
   .row { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; }
-  nav { display: flex; align-items: center; gap: 26px; font-size: 14px; color: var(--ink-soft); }
-  nav a:hover { color: var(--ink); }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+  nav { display: flex; align-items: center; gap: 22px; font-size: 14px; color: var(--ink-soft); }
+  nav a { transition: color .2s; }
+  nav a:hover, nav a[aria-current="page"] { color: var(--ink); }
+  nav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; }
   .cta { color: var(--ink); border: 1px solid var(--line-strong); padding: 7px 14px; border-radius: 999px; transition: border-color .2s, background .2s; }
   .cta:hover { border-color: var(--accent); background: var(--accent-soft); }
-  @media (max-width: 520px) {
-    .brand span { display: none; }
-    nav { gap: 18px; }
+  .menu { display: none; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  @media (max-width: 1020px) {
+    .menu {
+      display: grid; place-content: center; gap: 6px; width: 42px; height: 42px;
+      border: 1px solid var(--line-strong); border-radius: 12px; background: transparent; cursor: pointer;
+    }
+    .menu i { display: block; width: 18px; height: 1.5px; background: var(--ink); transition: transform .25s; }
+    :global(.menu-open) .menu i:first-of-type { transform: translateY(3.75px) rotate(45deg); }
+    :global(.menu-open) .menu i:last-of-type { transform: translateY(-3.75px) rotate(-45deg); }
+    nav {
+      position: fixed; top: 64px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      padding: 8px 16px 20px; background: rgba(11, 12, 15, 0.97);
+      border-bottom: 1px solid var(--line);
+      font-size: 17px;
+      opacity: 0; transform: translateY(-8px); pointer-events: none; visibility: hidden;
+      transition: opacity .2s, transform .2s, visibility .2s;
+    }
+    :global(.menu-open) nav { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
+    nav a { padding: 13px 4px; border-bottom: 1px solid var(--line); }
+    nav a[aria-current="page"] { text-decoration: none; color: var(--accent); }
+    .cta { margin-top: 14px; text-align: center; border-bottom: 1px solid var(--line-strong); }
   }
+  @media (prefers-reduced-motion: reduce) { nav, .menu i { transition: none; } }
 </style>

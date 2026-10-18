@@ -10,9 +10,9 @@ const { title, tagline, description, stack, ai, repo, eyebrow } = Astro.props;
 ---
 <Layout title={`${title} | Eitan Alperstein`} description={description}>
   <Nav />
-  <main class="showcase">
+  <main class="showcase page">
     <header class="wrap hero">
-      <a class="back" href="/#work" data-home>← All projects</a>
+      <a class="back" href="/#code" data-home>← All projects</a>
       <p class="eyebrow" data-reveal>{eyebrow}</p>
       <h1 data-reveal style="--d: 60ms">{title}</h1>
       <p class="tagline" data-reveal style="--d: 120ms">{tagline}</p>
@@ -24,7 +24,7 @@ const { title, tagline, description, stack, ai, repo, eyebrow } = Astro.props;
     <slot />
   </main>
   <footer class="wrap foot">
-    <a href="/#work" data-home class="link-arrow">← Back to all projects</a>
+    <a href="/#code" data-home class="link-arrow">← Back to all projects</a>
     <span>© {new Date().getFullYear()} Eitan Alperstein</span>
   </footer>
 </Layout>
@@ -42,17 +42,5 @@ const { title, tagline, description, stack, ai, repo, eyebrow } = Astro.props;
     transition: border-color .2s, background .2s;
   }
   .btn:hover { border-color: var(--accent); background: var(--accent-soft); }
-  .showcase :global(.block) { margin-top: 110px; }
-  .showcase :global(.block h2) { font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -0.03em; font-weight: 650; margin: 16px 0 28px; }
-  .showcase :global(.features) { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-  .showcase :global(.features li) { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; color: var(--ink-soft); font-size: 15px; }
-  .showcase :global(.features strong) { display: block; color: var(--ink); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  .showcase :global(.prose) { color: var(--ink-soft); font-size: 16.5px; max-width: 720px; }
-  .showcase :global(.prose p) { margin: 0 0 16px; }
-  .showcase :global(.prose a) { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
-  .showcase :global(.prose code), .showcase :global(td code) { font: 400 0.9em var(--mono); color: var(--ink); background: var(--surface); padding: 2px 6px; border-radius: 5px; }
-  .showcase :global(pre) { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; overflow-x: auto; font: 400 13.5px/1.7 var(--mono); color: var(--ink); margin: 0; }
-  .showcase :global(.two) { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 860px) { .showcase :global(.two) { grid-template-columns: 1fr; } }
   .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 110px; padding-bottom: 48px; color: var(--muted); font-size: 13.5px; }
 </style>

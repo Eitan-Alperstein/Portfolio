@@ -1,0 +1,144 @@
+---
+import Page from "../layouts/Page.astro";
+import Gallery from "../components/Gallery.astro";
+import ComingSoon from "../components/ComingSoon.astro";
+import { music } from "../data/life";
+import { listShots } from "../lib/shots";
+
+const { guitar, pedal, electronics } = music;
+const poster = listShots("pedal-poster")[0];
+const strings = [
+  { i: 5, name: "e", w: 1 }, { i: 4, name: "B", w: 1.2 }, { i: 3, name: "G", w: 1.5 },
+  { i: 2, name: "D", w: 1.9 }, { i: 1, name: "A", w: 2.3 }, { i: 0, name: "E", w: 2.8 },
+];
+const ytId = (url: string) => url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/)?.[1];
+---
+<Page
+  title="Music"
+  eyebrow="Music"
+  heading="Guitar, <span>and the gear behind it.</span>"
+  tagline={guitar.summary}
+  description="Eitan Alperstein's music: self-taught guitar, and a digital pedal built to model the Money for Nothing tone."
+>
+  <div slot="head" class="facts">
+    {guitar.facts.map((f) => <div><span>{f.label}</span><b>{f.value}</b></div>)}
+  </div>
+
+  <section class="wrap block">
+    <p class="eyebrow">Play along</p>
+    <h2>Pluck a string</h2>
+    <div class="guitar" data-guitar>
+      <div class="neck">
+        {strings.map((s) => (
+          <button type="button" class="string" data-pluck={s.i} aria-label={`Pluck the ${s.name} string`}>
+            <span class="note">{s.name}</span>
+            <svg viewBox="0 -12 600 24" preserveAspectRatio="none" aria-hidden="true">
+              <path data-string={s.i} d="M 0 0 Q 300 0 600 0" style={`stroke-width:${s.w}`} />
+            </svg>
+          </button>
+        ))}
+      </div>
+      <div class="scope">
+        <canvas aria-hidden="true"></canvas>
+        <div class="scope-bar">
+          <span data-note>Standard tuning · tap a string</span>
+          <button type="button" class="strum" data-strum>Strum all</button>
+        </div>
+      </div>
+      <p class="note-small">Each pluck is synthesized live in your browser with the Karplus–Strong algorithm. Turn your sound on.</p>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Recordings</p>
+    <h2>Hear me play</h2>
+    {guitar.recordings.length > 0 ? (
+      <div class="recs">
+        {guitar.recordings.map((r) => (
+          <article class="rec">
+            {r.youtube && ytId(r.youtube) && (
+              <div class="video"><iframe src={`https://www.youtube-nocookie.com/embed/${ytId(r.youtube)}`} title={r.title} loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+            )}
+            <div class="rec-body">
+              <h3>{r.title}</h3>
+              {r.note && <p>{r.note}</p>}
+              {r.audio && <audio controls preload="none" src={r.audio}></audio>}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="recs-empty">
+        <ComingSoon kind="audio" label="Recordings coming soon." hint="Clips and videos of me playing will show up here." />
+      </div>
+    )}
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Audio electronics</p>
+    <h2>The {pedal.name}</h2>
+    <div class="pedal">
+      <div class="prose">
+        <p>{pedal.summary}</p>
+        <p>{electronics}</p>
+      </div>
+      <div class="poster">
+        {poster
+          ? <a href={poster} target="_blank" rel="noopener"><img src={poster} alt={`Poster for the ${pedal.name}`} loading="lazy" /></a>
+          : <ComingSoon label="Poster coming soon." />}
+      </div>
+    </div>
+    <h3 class="sub">Build photos</h3>
+    <Gallery slug="pedal-build" alt="Pedal build photo" empty="Build photos coming soon." />
+  </section>
+</Page>
+
+<script>
+  import { startStrings } from "../scripts/strings";
+  const g = document.querySelector<HTMLElement>("[data-guitar]");
+  if (g) startStrings(g);
+</script>
+
+<style>
+  .facts { display: flex; flex-wrap: wrap; gap: 12px; }
+  .facts div { border: 1px solid var(--line); background: var(--bg-raised); border-radius: 12px; padding: 12px 16px; display: grid; gap: 4px; }
+  .facts span { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .facts b { font-weight: 600; font-size: 15px; }
+
+  .guitar { border: 1px solid var(--line); border-radius: 20px; background: var(--bg-raised); padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .guitar > * { min-width: 0; }
+  .neck {
+    border-radius: 12px; padding: 10px 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 calc(16.66% - 2px), rgba(220,226,255,0.1) calc(16.66% - 2px) 16.66%),
+      linear-gradient(180deg, #1a1712, #14110d);
+  }
+  .string { display: flex; align-items: center; gap: 14px; width: 100%; height: 38px; padding: 0 16px; background: none; border: 0; cursor: pointer; color: var(--muted); }
+  .string:hover .note, .string:focus-visible .note { color: var(--accent); }
+  .note { font: 500 13px/1 var(--mono); width: 14px; text-align: center; transition: color .2s; }
+  .string svg { flex: 1; min-width: 0; height: 24px; overflow: visible; }
+  .string path { fill: none; stroke: #c9c3b6; transition: stroke .3s; }
+  .string:hover path { stroke: #e6e1d6; }
+  .string :global(path.live) { stroke: var(--accent); }
+  .scope { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #0d0f14; }
+  .scope canvas { display: block; width: 100%; height: 110px; }
+  .scope-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--line); font: 400 12.5px/1 var(--mono); color: var(--muted); }
+  .strum { white-space: nowrap; font: 500 12.5px/1 var(--mono); color: var(--ink); background: var(--accent-soft); border: 1px solid rgba(159,177,255,.45); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  .strum:hover { background: var(--accent); color: var(--accent-ink); }
+  .note-small { margin: 0; color: var(--muted); font-size: 13.5px; }
+
+  .recs { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
+  .rec { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-raised); }
+  .video { aspect-ratio: 16 / 9; }
+  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .rec-body { padding: 18px 20px; display: grid; gap: 8px; }
+  .rec-body h3 { margin: 0; font-size: 17px; }
+  .rec-body p { margin: 0; color: var(--muted); font-size: 14px; }
+  .rec-body audio { width: 100%; }
+
+  .pedal { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; }
+  .poster img { width: 100%; border-radius: var(--radius); border: 1px solid var(--line); display: block; }
+  .sub { margin: 48px 0 18px; font-size: 18px; font-weight: 600; }
+  @media (max-width: 860px) { .pedal { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .guitar { padding: 16px; } .string { padding: 0 10px; } }
+</style>

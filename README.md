@@ -1,0 +1,50 @@
+# eitanalperstein.com
+
+Eitan Alperstein's personal site: code projects, music, math tutoring, The Paw, academics, languages and volunteering.
+
+For the list of content that still needs filling in (photos, recordings, stats…), see **[CONTENT-TODO.md](CONTENT-TODO.md)**.
+
+## How this site works
+
+**Stack.** [Astro](https://astro.build) generating a fully static site (plain HTML/CSS plus small scripts), deployed on Vercel. No database, no server. Fonts are self-hosted via Fontsource; the hero background uses `d3-delaunay`.
+
+**Where things live.**
+
+```
+src/data/projects.json   code projects (homepage "Code" section)
+src/data/life.ts         music, tutoring, The Paw, academics, languages, volunteering
+src/data/site.ts         email, GitHub/LinkedIn links, profile photo override, "Right now" list
+src/pages/               one file per route (index, music, tutoring, the-paw, academics,
+                         languages, volunteering, daily-tracker, arduino-parkour)
+src/components/          sections and shared pieces (Nav, Gallery, ComingSoon, Tags, …)
+src/layouts/             Layout (html shell), Page (life pages), Showcase (project pages)
+src/scripts/             interactive bits: hero Voronoi field, LCD game, guitar strings
+public/shots/<slot>/     images produced by `npm run shots` (don't edit by hand)
+public/media/guitar/     audio files for guitar recordings
+scripts/shots.mjs        the image pipeline
+vercel.json              build settings, redirects, subdomain rewrites
+```
+
+Pages render from the data files, so most updates are data edits, not markup.
+
+**Common tasks.**
+
+- *Add a code project:* add an object to `src/data/projects.json` with `title`, `blurb`, `stack`, `group` (`students`, `mine` or `sims`), `url` and/or `repo` (or neither, for private), `ai` (true/false), `updated`. Featured cards also need `hero` (1–3), `slug` and `long`, plus an artwork component in `src/components/art/` mapped in `Featured.astro`.
+- *Add a Paw article:* add to `paw.articles` in `src/data/life.ts` (format in CONTENT-TODO.md).
+- *Add photos/screenshots:* put them in `~/dev/screenshots/<slot>/` and run `npm run shots`. Slots are listed in CONTENT-TODO.md; to add a new slot, add its name to `SLOTS` in `scripts/shots.mjs` and render it with `<Gallery slug="<slot>" … />`.
+- *Add a guitar recording, testimonial or stat:* see CONTENT-TODO.md.
+
+**Run it locally.**
+
+```sh
+npm install
+npm run dev        # http://localhost:4321
+npm run build      # production build into dist/
+```
+
+**Branches, previews and deploys.**
+
+- `main` is production: every push to `main` deploys to www.eitanalperstein.com.
+- Any other branch gets its own Vercel preview URL on push (shown in the Vercel dashboard and on the GitHub commit). Previews are protected, so you need to be logged into Vercel to view them.
+- Normal flow: make changes on a branch → push → check the preview → merge into `main`.
+- `vercel.json` also rewrites `tracker.eitanalperstein.com` → `/daily-tracker` and `parkour.eitanalperstein.com` → `/arduino-parkour`. Those subdomains must be added to the Vercel project's domains to work.

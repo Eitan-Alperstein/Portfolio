@@ -1,7 +1,7 @@
 // npm run shots
-// Copies screenshots from ~/dev/screenshots/<project>/ into public/shots/<project>/,
+// Copies images from ~/dev/screenshots/<slot>/ into public/shots/<slot>/,
 // resized to at most 1800px and re-encoded as JPEG (macOS `sips`), so the
-// showcase galleries pick them up on the next build. Files are shown in
+// pages pick them up on the next build. Files are shown in
 // filename order, so prefix them (01-, 02-...) to control the order.
 // Override the source folder with SHOTS_SRC=/some/path npm run shots.
 import { execFileSync } from "node:child_process";
@@ -11,10 +11,11 @@ import path from "node:path";
 
 const SRC = process.env.SHOTS_SRC || path.join(os.homedir(), "dev", "screenshots");
 const DEST = path.join(process.cwd(), "public", "shots");
-const PROJECTS = ["daily-tracker", "arduino-parkour"];
+// One folder per image slot on the site. See CONTENT-TODO.md for where each shows up.
+const SLOTS = ["profile", "pedal-poster", "pedal-build", "daily-tracker", "arduino-parkour"];
 const IMAGE = /\.(png|jpe?g|webp|heic|tiff?|gif)$/i;
 
-for (const project of PROJECTS) {
+for (const project of SLOTS) {
   const from = path.join(SRC, project), to = path.join(DEST, project);
   fs.mkdirSync(to, { recursive: true });
   const sources = fs.existsSync(from) ? fs.readdirSync(from).filter((f) => IMAGE.test(f)).sort() : [];

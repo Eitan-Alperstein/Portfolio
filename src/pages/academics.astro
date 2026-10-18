@@ -1,0 +1,81 @@
+---
+import Page from "../layouts/Page.astro";
+import { academics as a } from "../data/life";
+
+const kind = (name: string) => name.startsWith("AP ") ? "AP" : name.startsWith("Honors ") ? "Honors" : null;
+const scored = a.years.flatMap((y) => y.courses).filter((c) => c.score);
+const fives = scored.filter((c) => c.score === 5);
+---
+<Page
+  title="Academics"
+  eyebrow={`${a.school} · Class of ${a.classOf}`}
+  heading="School, <span>mostly math and more math.</span>"
+  tagline="I load up on AP and honors classes, especially math: Calculus BC and Honors Calculus III this year, on top of physics, cybersecurity and Spanish."
+  description="Eitan Alperstein's coursework and AP exam scores."
+>
+  <section class="wrap block">
+    <div class="scores">
+      <div class="big">
+        <b>{fives.length}<span>/</span>{scored.length}</b>
+        <p>AP exams with a 5</p>
+      </div>
+      <div class="detail">
+        <p class="sum">{a.apSummary}</p>
+        <div class="chips">{scored.map((c) => <span><i>{c.score}</i>{c.name.replace(/^AP /, "")}</span>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Coursework</p>
+    <h2>Year by year</h2>
+    <div class="years">
+      {a.years.map((y) => (
+        <article class={`year ${y.current ? "current" : ""}`}>
+          <header>
+            <h3>{y.label}</h3>
+            <span class="grade">{y.grade}</span>
+            {y.current && <span class="now">In progress</span>}
+          </header>
+          <ul>
+            {y.courses.map((c) => (
+              <li>
+                <span class="name">{c.name}</span>
+                <span class="tags">
+                  {kind(c.name) && <span class={`kind ${kind(c.name)!.toLowerCase()}`}>{kind(c.name)}</span>}
+                  {c.score && <span class="score" title={`AP exam score: ${c.score}`}>{c.score}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+</Page>
+
+<style>
+  .scores { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; border: 1px solid var(--line); border-radius: 24px; padding: 40px;
+    background: radial-gradient(60% 100% at 0% 0%, rgba(159,177,255,0.14), transparent 60%), var(--bg-raised); }
+  .big b { font-size: clamp(64px, 10vw, 110px); line-height: .9; letter-spacing: -0.06em; font-weight: 700; }
+  .big b span { color: var(--muted); font-weight: 400; margin: 0 4px; }
+  .big p { margin: 10px 0 0; font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .sum { margin: 0 0 18px; font-size: 17px; color: var(--ink-soft); max-width: 600px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips span { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: 14px; }
+  .chips i, .score { font: 600 12px/1 var(--mono); font-style: normal; width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; background: var(--accent); color: var(--accent-ink); }
+  .years { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+  .year { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 24px; }
+  .year.current { border-color: rgba(159,177,255,.45); }
+  .year header { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .year h3 { margin: 0; font-size: 22px; letter-spacing: -0.02em; }
+  .grade { color: var(--muted); font-size: 14px; }
+  .now { margin-left: auto; font: 500 11px/1 var(--mono); color: var(--accent); border: 1px solid rgba(159,177,255,.45); padding: 5px 8px; border-radius: 999px; }
+  .year ul { list-style: none; margin: 0; padding: 0; }
+  .year li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--ink-soft); }
+  .tags { display: inline-flex; gap: 6px; align-items: center; flex-shrink: 0; }
+  .kind { font: 500 10.5px/1 var(--mono); padding: 5px 7px; border-radius: 6px; border: 1px solid var(--line-strong); color: var(--muted); }
+  .kind.ap { color: var(--ink); }
+  @media (max-width: 960px) { .years { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .scores { grid-template-columns: 1fr; gap: 22px; padding: 26px; } }
+</style>
