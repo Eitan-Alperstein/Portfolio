@@ -24,6 +24,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <slot />
+    <p class="ai-credit wrap">This site was created with the assistance of AI</p>
     <script>
       const io = new IntersectionObserver((entries) => {
         for (const e of entries) {

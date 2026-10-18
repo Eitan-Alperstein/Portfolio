@@ -43,25 +43,41 @@ recordings: [
 - `audio`: put the file (MP3 or M4A) in `public/media/guitar/` and reference it as `/media/guitar/<file>`. Keep files under ~10 MB.
 - `note` is optional.
 
-### The Paw ad revenue (`/the-paw` → third stat card)
+### "My name in every language" clips (`/languages`)
 
-Set `paw.adRevenue` in `src/data/life.ts`:
+Each row plays a short audio clip of "Eitan" in that language. Two ways to fill them:
 
-```ts
-adRevenue: { amount: "$X,XXX", period: "2026–27" },
+1. **Your own voice (most authentic).** Record yourself saying your name in each language and save the files as `public/audio/own/name-<id>.m4a` (or `.mp3`), where `<id>` is `en`, `he`, `es`, `ru`, `fr` or `ar`. Any file there automatically replaces the generated clip for that language on the next build; the others keep using the generated voice. Keep clips short (about 1 second) and trimmed.
+2. **Better computer voices.** The generated clips (`public/audio/name-<id>.m4a`) currently use macOS's basic "compact" voices, which sound robotic. To upgrade: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices, and download the Enhanced or Premium version of: **Ava** or **Zoe** (English, US), **Carmit** (Hebrew), **Mónica** (Spanish, Spain) or **Paulina** (Spanish, Mexico), **Milena** (Russian), **Thomas** or **Amélie** (French), **Majed** (Arabic). Then run:
+
+```sh
+npm run voices     # regenerates public/audio/name-*.m4a with the best installed voice
 ```
 
-It's shown exactly as written. Leave it `null` to keep the "coming soon" card.
+It prints which voice it used for each language. The texts and voice preferences are in `src/data/names.json`. If you change the AI caption ("The voices are computer-generated") after switching to your own recordings, it's in `src/pages/languages.astro`.
+
+### The Paw stats (`/the-paw` → stat cards at the top)
+
+`paw.stats` in `src/data/life.ts` is a list of `{ value, label }` cards, shown in order. Add, remove or reorder freely; the row adapts to 1–3 cards per line.
+
+```ts
+stats: [
+  { value: "10+", label: "articles published since I took over business & advertising" },
+  { value: "$X,XXX", label: "ad revenue in 2026–27" },
+],
+```
+
+`value` is shown exactly as written. A card with `value: null` shows "coming soon" (that's how the yearly ad revenue slot works right now).
 
 ### The Paw articles (`/the-paw` → "Articles")
 
-`paw.articles` in `src/data/life.ts` currently lists the 7 articles credited to Eitan in The Paw's archive. Add any missing ones (he's written 10+):
+`paw.articles` in `src/data/life.ts` currently lists the 7 articles credited to Eitan in The Paw's archive (his own bylines). Add any that are missing:
 
 ```ts
 { title: "Article title", url: "https://www.thepawnews.com/<slug>", when: "Nov 2026", coAuthors: "with Someone" },
 ```
 
-`when` is free text (e.g. "Nov 2026" or "2024–25"). `coAuthors` is optional. Keep the list newest first. If the article count changes, update `paw.articlesWritten` too.
+`when` is free text (e.g. "Nov 2026" or "2024–25"). `coAuthors` is optional. Keep the list newest first.
 
 ### Tutoring testimonials (`/tutoring` → "What families say")
 

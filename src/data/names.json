@@ -1,0 +1,8 @@
+[
+  { "id": "en", "label": "English", "text": "Eitan", "locale": "en_US", "voices": ["Ava", "Zoe", "Evan", "Samantha"] },
+  { "id": "he", "label": "Hebrew", "text": "איתן", "dir": "rtl", "locale": "he_IL", "voices": ["Carmit"] },
+  { "id": "es", "label": "Spanish", "text": "Eitan", "locale": "es_ES", "voices": ["Mónica", "Paulina"] },
+  { "id": "ru", "label": "Russian", "text": "Эйтан", "locale": "ru_RU", "voices": ["Milena"] },
+  { "id": "fr", "label": "French", "text": "Eitan", "locale": "fr_FR", "voices": ["Amélie", "Thomas"] },
+  { "id": "ar", "label": "Arabic", "text": "إيتان", "dir": "rtl", "locale": "ar_001", "voices": ["Majed", "Maged"] }
+]

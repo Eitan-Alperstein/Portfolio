@@ -107,3 +107,6 @@ h2.title {
   .page pre { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; overflow-x: auto; font: 400 13.5px/1.7 var(--mono); color: var(--ink); margin: 0; }
   .page .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   @media (max-width: 860px) { .page .two { grid-template-columns: 1fr; } }
+
+/* Site-wide AI credit under every page's footer. --muted on --bg is about 5:1 contrast. */
+.ai-credit { margin-top: -28px; padding-bottom: 28px; font-size: 11.5px; line-height: 1.4; color: var(--muted); }

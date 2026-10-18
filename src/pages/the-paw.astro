@@ -3,8 +3,6 @@ import Page from "../layouts/Page.astro";
 import Arrow from "../components/Arrow.astro";
 import ComingSoon from "../components/ComingSoon.astro";
 import { paw } from "../data/life";
-
-const roles = paw.timeline.filter((t) => t.kind === "role");
 ---
 <Page
   title="The Paw"
@@ -19,12 +17,10 @@ const roles = paw.timeline.filter((t) => t.kind === "role");
   </div>
 
   <section class="wrap block">
-    <div class="stats">
-      <div class="stat"><b>{paw.articlesWritten}</b><span>articles written</span></div>
-      <div class="stat"><b>{roles.length}</b><span>roles on staff</span></div>
-      {paw.adRevenue
-        ? <div class="stat"><b>{paw.adRevenue.amount}</b><span>ad revenue, {paw.adRevenue.period}</span></div>
-        : <div class="stat pending"><b>—</b><span>yearly ad revenue · coming soon</span></div>}
+    <div class="stats" style={`--n: ${paw.stats.length}`}>
+      {paw.stats.map((st) => st.value
+        ? <div class="stat"><b>{st.value}</b><span>{st.label}</span></div>
+        : <div class="stat pending"><b>—</b><span>{st.label} · coming soon</span></div>)}
     </div>
   </section>
 
@@ -45,7 +41,7 @@ const roles = paw.timeline.filter((t) => t.kind === "role");
 
   <section class="wrap block">
     <p class="eyebrow">Writing</p>
-    <h2>Articles</h2>
+    <h2>My articles</h2>
     {paw.articles.length > 0 ? (
       <ul class="articles">
         {paw.articles.map((a) => (
@@ -72,7 +68,7 @@ const roles = paw.timeline.filter((t) => t.kind === "role");
   .btn:hover { background: var(--accent); border-color: var(--accent); }
   .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
   .btn.ghost:hover { border-color: var(--accent); background: var(--accent-soft); }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(min(var(--n), 3), minmax(0, 1fr)); gap: 14px; }
   .stat { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 26px; display: grid; gap: 8px; }
   .stat b { font-size: clamp(36px, 5vw, 52px); letter-spacing: -0.04em; font-weight: 680; line-height: 1; }
   .stat span { color: var(--muted); font-size: 14.5px; }

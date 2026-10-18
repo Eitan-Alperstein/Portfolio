@@ -102,13 +102,16 @@ export const paw = {
   // Timeline, oldest first. "role" entries are staff positions; "milestone"
   // entries are things done along the way.
   timeline: [
-    { kind: "role", title: "Reporter", when: "Since freshman year", text: "Writing news, features and opinion pieces. 10+ articles so far." },
+    { kind: "role", title: "Reporter", when: "Since freshman year", text: "Writing news, features and opinion pieces." },
     { kind: "role", title: "Business & Advertising Manager", when: "Since summer 2026", text: "Running ad sales and the business side of the paper." },
     { kind: "milestone", title: "Created our new website", when: "Oct 2026", text: "A fast static site for readers, and a CMS so editors can publish without touching code." },
   ] as { kind: "role" | "milestone"; title: string; when: string; text: string }[],
-  articlesWritten: "10+",
-  // Yearly ad revenue, as you want it displayed, e.g. "$2,400". Leave null until you have it.
-  adRevenue: null as null | { amount: string; period: string },
+  // Stat cards at the top of /the-paw, in order. `value` is shown exactly as
+  // written; a null value shows a "coming soon" card.
+  stats: [
+    { value: "10+", label: "articles published since I took over business & advertising" },
+    { value: null, label: "yearly ad revenue" },
+  ] as { value: string | null; label: string }[],
   // Articles credited to Eitan in The Paw's archive, newest first.
   articles: [
     { title: "Is AI Anti-Semitic, Just Unfinished, Or Both?", url: "https://www.thepawnews.com/is-ai-anti-semitic-just-unfinished-or-both", when: "Mar 2026" },
@@ -163,16 +166,15 @@ export const academics = {
 export const languages = {
   intro:
     "Languages are a hobby of mine. Some I'm fluent in, one I'm pretty solid in, and a few I've only just started.",
-  // `name` is "Eitan Alperstein" in that language's script; `speech` is the
-  // BCP-47 locale used to pick a text-to-speech voice for it.
+  // The spoken name clips are configured in src/data/names.json.
   list: [
-    { name: "English", native: "English", level: "Native", pct: 100, note: "Native.", myName: "Eitan Alperstein", speech: "en-US" },
-    { name: "Hebrew", native: "עברית", level: "Fluent", pct: 92, dir: "rtl", note: "Fluent, from family. I'm Israeli-American.", myName: "איתן אלפרשטיין", speech: "he-IL" },
-    { name: "Spanish", native: "Español", level: "B1", pct: 55, note: "It started as a middle-school requirement and grew into a hobby of its own, along with a real fascination with traveling the Spanish-speaking world. I'm also a teaching assistant for Spanish I and II.", myName: "Eitan Alperstein", speech: "es-ES" },
-    { name: "Russian", native: "Русский", level: "Just started", pct: 10, note: "Just started, for family.", myName: "Эйтан Альперштейн", speech: "ru-RU" },
-    { name: "French", native: "Français", level: "Just started", pct: 10, note: "Just started. Honestly? It sounds cool.", myName: "Eitan Alperstein", speech: "fr-FR" },
-    { name: "Arabic", native: "العربية", level: "Just started", pct: 8, dir: "rtl", note: "Just started, because some conversations matter more in the other person's language.", myName: "إيتان ألبرشتاين", speech: "ar-SA" },
-  ] as { name: string; native: string; level: string; pct: number; dir?: "rtl"; note: string; myName: string; speech: string }[],
+    { name: "English", native: "English", level: "Native", pct: 100, note: "Native." },
+    { name: "Hebrew", native: "עברית", level: "Fluent", pct: 92, dir: "rtl", note: "Fluent, from family. I'm Israeli-American." },
+    { name: "Spanish", native: "Español", level: "B1", pct: 55, note: "It started as a middle-school requirement and grew into a hobby of its own, along with a real fascination with traveling the Spanish-speaking world. I'm also a teaching assistant for Spanish I and II." },
+    { name: "Russian", native: "Русский", level: "Just started", pct: 10, note: "Just started, for family." },
+    { name: "French", native: "Français", level: "Just started", pct: 10, note: "Just started. Honestly? It sounds cool." },
+    { name: "Arabic", native: "العربية", level: "Just started", pct: 8, dir: "rtl", note: "Just started, so I can talk with more of my neighbors in the region, in their own language." },
+  ] as { name: string; native: string; level: string; pct: number; dir?: "rtl"; note: string }[],
 };
 
 // --------------------------------------------------------- volunteering

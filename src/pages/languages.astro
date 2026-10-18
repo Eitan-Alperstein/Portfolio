@@ -1,6 +1,20 @@
 ---
+import "@fontsource/noto-sans-hebrew/600.css";
+import "@fontsource/noto-sans-arabic/600.css";
+import fs from "node:fs";
+import path from "node:path";
 import Page from "../layouts/Page.astro";
 import { languages as l } from "../data/life";
+import names from "../data/names.json";
+
+// A recording in public/audio/own/ wins over the generated clip (npm run voices).
+const clip = (id: string) => {
+  for (const ext of ["m4a", "mp3"]) {
+    if (fs.existsSync(path.join(process.cwd(), "public", "audio", "own", `name-${id}.${ext}`))) return `/audio/own/name-${id}.${ext}`;
+  }
+  return `/audio/name-${id}.m4a`;
+};
+const rows = (names as { id: string; label: string; text: string; dir?: string }[]).map((n) => ({ ...n, src: clip(n.id) }));
 ---
 <Page
   title="Languages"
@@ -9,26 +23,6 @@ import { languages as l } from "../data/life";
   tagline={l.intro}
   description="The languages Eitan Alperstein speaks and is learning: English, Hebrew, Spanish, Russian, French and Arabic."
 >
-  <section class="wrap block">
-    <p class="eyebrow">Say it out loud</p>
-    <h2>My name, in every language</h2>
-    <p class="ai-note"><span class="tags"><span class="ai" title="Built with AI assistance">AI</span></span>Built with AI for this site.</p>
-    <div class="names" data-names>
-      {l.list.map((x) => (
-        <div class="row" data-speak={x.speech} data-text={x.myName} data-label={x.name}>
-          <span class="lang">{x.name}</span>
-          <span class="script" dir={x.dir ?? "ltr"} lang={x.speech}>{x.myName}</span>
-          <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-          <button type="button" aria-pressed="false" aria-label={`Hear my name in ${x.name}`}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" /></svg>
-          </button>
-          <span class="row-note" data-note aria-live="polite"></span>
-        </div>
-      ))}
-      <p class="status" data-status aria-live="polite">Uses your device's built-in voices, so accents depend on what's installed.</p>
-    </div>
-  </section>
-
   <section class="wrap block">
     <p class="eyebrow">Why each one</p>
     <h2>How I got here</h2>
@@ -48,10 +42,29 @@ import { languages as l } from "../data/life";
       ))}
     </div>
   </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Say it out loud</p>
+    <h2>My name, in every language</h2>
+    <p class="ai-note"><span class="tags"><span class="ai" title="Built with AI assistance">AI</span></span>Built with AI for this site. The voices are computer-generated.</p>
+    <div class="names" data-names>
+      {rows.map((n) => (
+        <div class="row" data-audio={n.src}>
+          <span class="lang">{n.label}</span>
+          <span class="name"><span class={`script ${n.id}`} dir={n.dir ?? "ltr"} lang={n.id}>{n.text}</span></span>
+          <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <button type="button" aria-pressed="false" aria-label={`Hear "Eitan" in ${n.label}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" /><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" /></svg>
+          </button>
+          <span class="row-note" data-note aria-live="polite"></span>
+        </div>
+      ))}
+    </div>
+  </section>
 </Page>
 
 <script>
-  import { startNames } from "../scripts/speak";
+  import { startNames } from "../scripts/names";
   const el = document.querySelector<HTMLElement>("[data-names]");
   if (el) startNames(el);
 </script>
@@ -60,21 +73,26 @@ import { languages as l } from "../data/life";
   .ai-note { display: flex; align-items: center; gap: 10px; margin: -12px 0 22px; color: var(--muted); font-size: 14px; }
   .names { border: 1px solid var(--line); border-radius: 20px; background: var(--bg-raised); overflow: hidden; }
   .row {
-    position: relative; display: grid; grid-template-columns: 110px minmax(0, 1fr) 48px 46px; align-items: center; gap: 16px;
-    padding: 16px 22px; border-bottom: 1px solid var(--line); transition: background .3s;
+    position: relative; display: grid; grid-template-columns: 120px minmax(0, 1fr) 48px 46px; align-items: center; gap: 16px;
+    padding: 14px 22px; border-bottom: 1px solid var(--line); transition: background .3s;
   }
+  .row:last-child { border-bottom: 0; }
   .row::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent); transform: scaleY(0); transition: transform .3s; }
   .row.speaking { background: var(--accent-soft); }
   .row.speaking::before { transform: scaleY(1); }
   .lang { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .script { font-size: clamp(20px, 2.6vw, 28px); font-weight: 600; letter-spacing: -0.01em; text-align: start; transition: color .3s; }
+  /* The name column is centered for every script, so RTL names don't jump sides. */
+  .name { display: flex; justify-content: center; align-items: center; height: 44px; }
+  .script { font-size: 28px; line-height: 1; font-weight: 600; letter-spacing: -0.01em; transition: color .3s; }
+  .script.he { font-family: "Noto Sans Hebrew", var(--sans); font-size: 29px; letter-spacing: 0; }
+  .script.ar { font-family: "Noto Sans Arabic", var(--sans); font-size: 30px; letter-spacing: 0; line-height: 1.2; }
   .row.speaking .script { color: var(--accent); }
   .wave { display: flex; align-items: center; gap: 3px; height: 22px; opacity: 0; transition: opacity .3s; }
   .wave i { width: 3px; height: 6px; border-radius: 2px; background: var(--accent); }
   .row.speaking .wave { opacity: 1; }
-  .row.speaking .wave i { animation: talk .9s ease-in-out infinite; }
-  .wave i:nth-child(2) { animation-delay: .15s !important; } .wave i:nth-child(3) { animation-delay: .3s !important; }
-  .wave i:nth-child(4) { animation-delay: .45s !important; } .wave i:nth-child(5) { animation-delay: .6s !important; }
+  .row.speaking .wave i { animation: talk .7s ease-in-out infinite; }
+  .wave i:nth-child(2) { animation-delay: .12s !important; } .wave i:nth-child(3) { animation-delay: .24s !important; }
+  .wave i:nth-child(4) { animation-delay: .36s !important; } .wave i:nth-child(5) { animation-delay: .48s !important; }
   @keyframes talk { 0%, 100% { height: 5px; } 50% { height: 20px; } }
   button {
     width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: var(--ink);
@@ -82,10 +100,8 @@ import { languages as l } from "../data/life";
   }
   button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
   button:hover, button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
-  button:disabled { opacity: .35; cursor: not-allowed; background: transparent; color: var(--ink); border-color: var(--line-strong); }
-  .row-note { grid-column: 2 / -1; font-size: 13px; color: var(--muted); }
+  .row-note { grid-column: 1 / -1; text-align: center; font-size: 13px; color: var(--muted); }
   .row-note:empty { display: none; }
-  .status { margin: 0; padding: 14px 22px; font: 400 12.5px/1.5 var(--mono); color: var(--muted); }
   @media (prefers-reduced-motion: reduce) { .row.speaking .wave i { animation: none; height: 14px; } .row, .row::before { transition: none; } }
 
   .langs { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -103,7 +119,9 @@ import { languages as l } from "../data/life";
   @media (max-width: 960px) { .langs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 600px) {
     .langs { grid-template-columns: minmax(0, 1fr); }
-    .row { grid-template-columns: minmax(0, 1fr) 46px; grid-template-areas: "lang btn" "script btn" "note note"; gap: 4px 12px; padding: 14px 16px; }
-    .lang { grid-area: lang; } .script { grid-area: script; } button { grid-area: btn; } .wave { display: none; } .row-note { grid-area: note; }
+    .row { grid-template-columns: 76px minmax(0, 1fr) 44px; gap: 10px; padding: 12px 14px; }
+    .wave { display: none; }
+    .lang { font-size: 11px; }
+    .script { font-size: 24px; } .script.he { font-size: 25px; } .script.ar { font-size: 26px; }
   }
 </style>
