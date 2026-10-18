@@ -116,5 +116,22 @@
     ],
     "language": "TypeScript",
     "created": "2026-10-18"
+  },
+  {
+    "name": "tempo",
+    "description": "A calm macOS task manager that ranks tasks by importance, effort and available time",
+    "homepage": null,
+    "url": "https://github.com/Eitan-Alperstein/tempo",
+    "topics": [
+      "ai",
+      "portfolio",
+      "react",
+      "rust",
+      "tauri",
+      "tools",
+      "typescript"
+    ],
+    "language": "TypeScript",
+    "created": "2026-10-18"
   }
 ]
