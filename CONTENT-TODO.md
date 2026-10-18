@@ -67,7 +67,7 @@ stats: [
 ],
 ```
 
-`value` is shown exactly as written. A card with `value: null` shows "coming soon" (that's how the yearly ad revenue slot works right now).
+`value` is shown exactly as written. A card with `value: null` shows "coming soon" (use that for a stat you plan to fill in soon). The yearly ad revenue card isn't on the page yet: add it as a new entry once there's a number.
 
 ### The Paw articles (`/the-paw` → "Articles")
 

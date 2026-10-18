@@ -103,14 +103,16 @@ export const paw = {
   // entries are things done along the way.
   timeline: [
     { kind: "role", title: "Reporter", when: "Since freshman year", text: "Writing news, features and opinion pieces." },
-    { kind: "role", title: "Business & Advertising Manager", when: "Since summer 2026", text: "Running ad sales and the business side of the paper." },
+    { kind: "role", title: "Business & Advertising Manager", when: "Since summer 2026", text: "Running ad sales and the business side of a 19-student paper." },
     { kind: "milestone", title: "Created our new website", when: "Oct 2026", text: "A fast static site for readers, and a CMS so editors can publish without touching code." },
   ] as { kind: "role" | "milestone"; title: string; when: string; text: string }[],
   // Stat cards at the top of /the-paw, in order. `value` is shown exactly as
   // written; a null value shows a "coming soon" card.
   stats: [
-    { value: "10+", label: "articles published since I took over business & advertising" },
-    { value: null, label: "yearly ad revenue" },
+    { value: "6.53k", label: "impressions in my first 3 months as business & ad manager" },
+    { value: "262", label: "clicks in those 3 months" },
+    { value: "+257%", label: "growth in clicks over those 3 months" },
+    { value: "10+", label: "articles published since I took over" },
   ] as { value: string | null; label: string }[],
   // Articles credited to Eitan in The Paw's archive, newest first.
   articles: [
