@@ -14,17 +14,13 @@ const photo = PHOTO ?? listShots("profile")[0] ?? null;
     </div>
     <div class="text">
       <p class="eyebrow" data-reveal>About</p>
-      <h2 class="title" data-reveal style="--d: 60ms">Hi, I'm Eitan.</h2>
+      <h2 class="title" data-reveal style="--d: 60ms">Hi, I’m Eitan.</h2>
       <div class="prose" data-reveal style="--d: 120ms">
-        <p>
-          I'm a junior at Denver Jewish Day School (class of 2028). I like making stuff for the sake of making stuff, and that doesn't stop at code.
-        </p>
-        <p>
-          I build apps, tools and simulations, mostly for students like me. I taught myself guitar and built a pedal to chase a Dire Straits tone. I tutor math, from elementary school through Calculus II. At <strong>The Paw</strong>, my school's student newspaper, I write articles, run the business and advertising side, and created our new website.
-        </p>
-        <p>
-          I speak English and Hebrew, I'm a Spanish teaching assistant, and I've started Russian, French and Arabic for fun. I also founded the CTeen program at my local Chabad and competed in the <strong>2025 NASA App Development Challenge</strong> with Team Space Lazer.
-        </p>
+        <p>I’m a student, builder, and lifelong tinkerer. I like figuring out how things work, finding ways to make them better, and building things simply because I want to see if I can.</p>
+        <p>Most of my projects start with a question, an annoyance, or an idea I can’t quite leave alone. Sometimes that means writing software to solve a problem. Sometimes it means building electronics, experimenting with music, or finding a better way to do something I’ve done a hundred times before.</p>
+        <p>I’m a junior at Denver Jewish Day School, where I work on everything from student-built software to journalism and entrepreneurship. I write and manage the business side of <em>The Paw</em>, our student newspaper, and have taken on projects ranging from redesigning its website to developing apps and tools of my own. Outside the classroom, I tutor math through Calculus II, play guitar, and explore languages.</p>
+        <p>I’m interested in the intersection of software, engineering, and creative problem-solving. I don’t have one narrowly defined field I’m committed to yet, and that’s part of the fun. I’d rather keep experimenting, learn whatever a project demands, and see what I can make next.</p>
+        <p class="closer"><strong>This is where I keep the things I’ve built, the things I’m working on, and the ideas I’m exploring.</strong></p>
       </div>
 
       <div class="now" data-reveal style="--d: 180ms">
@@ -52,6 +48,8 @@ const photo = PHOTO ?? listShots("profile")[0] ?? null;
   .prose { margin-top: 26px; color: var(--ink-soft); font-size: 17px; max-width: 640px; }
   .prose p { margin: 0 0 18px; }
   .prose strong { color: var(--ink); font-weight: 600; }
+  .prose em { color: var(--ink); }
+  .prose .closer { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 18px; }
   .now { margin-top: 36px; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px; background: var(--bg-raised); max-width: 640px; }
   .now-title { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(159,177,255,.6); animation: pulse 2.4s infinite; }

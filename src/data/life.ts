@@ -163,14 +163,16 @@ export const academics = {
 export const languages = {
   intro:
     "Languages are a hobby of mine. Some I'm fluent in, one I'm pretty solid in, and a few I've only just started.",
+  // `name` is "Eitan Alperstein" in that language's script; `speech` is the
+  // BCP-47 locale used to pick a text-to-speech voice for it.
   list: [
-    { name: "English", native: "English", level: "Native", pct: 100, hello: "Hello", note: "The default." },
-    { name: "Hebrew", native: "עברית", level: "Fluent", pct: 92, hello: "שלום", dir: "rtl", note: "" },
-    { name: "Spanish", native: "Español", level: "B1", pct: 55, hello: "Hola", note: "B1, and I'm a teaching assistant for Spanish I and II." },
-    { name: "Russian", native: "Русский", level: "Just started", pct: 10, hello: "Привет", note: "Just getting started, new alphabet and all." },
-    { name: "French", native: "Français", level: "Just started", pct: 10, hello: "Bonjour", note: "Just getting started." },
-    { name: "Arabic", native: "العربية", level: "Just started", pct: 8, hello: "مرحبا", dir: "rtl", note: "Just getting started. Right to left, like Hebrew." },
-  ] as { name: string; native: string; level: string; pct: number; hello: string; dir?: "rtl"; note: string }[],
+    { name: "English", native: "English", level: "Native", pct: 100, note: "Native.", myName: "Eitan Alperstein", speech: "en-US" },
+    { name: "Hebrew", native: "עברית", level: "Fluent", pct: 92, dir: "rtl", note: "Fluent, from family. I'm Israeli-American.", myName: "איתן אלפרשטיין", speech: "he-IL" },
+    { name: "Spanish", native: "Español", level: "B1", pct: 55, note: "It started as a middle-school requirement and grew into a hobby of its own, along with a real fascination with traveling the Spanish-speaking world. I'm also a teaching assistant for Spanish I and II.", myName: "Eitan Alperstein", speech: "es-ES" },
+    { name: "Russian", native: "Русский", level: "Just started", pct: 10, note: "Just started, for family.", myName: "Эйтан Альперштейн", speech: "ru-RU" },
+    { name: "French", native: "Français", level: "Just started", pct: 10, note: "Just started. Honestly? It sounds cool.", myName: "Eitan Alperstein", speech: "fr-FR" },
+    { name: "Arabic", native: "العربية", level: "Just started", pct: 8, dir: "rtl", note: "Just started, because some conversations matter more in the other person's language.", myName: "إيتان ألبرشتاين", speech: "ar-SA" },
+  ] as { name: string; native: string; level: string; pct: number; dir?: "rtl"; note: string; myName: string; speech: string }[],
 };
 
 // --------------------------------------------------------- volunteering

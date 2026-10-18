@@ -4,6 +4,15 @@ import Gallery from "../components/Gallery.astro";
 import projects from "../data/projects.json";
 
 const p = projects.find((x) => x.title === "Arduino Parkour")!;
+
+// The 8 custom characters, built exactly like buildChar() in parkour_game.ino:
+// glyph i has the ball if bit 2 is set, the upper wall if bit 1, the lower wall if bit 0.
+const glyphs = Array.from({ length: 8 }, (_, i) => {
+  const ball = !!(i & 4), w1 = !!(i & 2), w2 = !!(i & 1);
+  const rows = [0, w1 ? 0b11111 : 0, 0, 0, 0, w2 ? 0b11111 : 0, 0, ball ? 0b00100 : 0];
+  const parts = [w1 && "upper wall", w2 && "lower wall", ball && "ball"].filter(Boolean) as string[];
+  return { i, rows, label: parts.length ? parts.join(" + ") : "empty", ball };
+});
 const pins = [
   ["LCD RS", "D12"], ["LCD E", "D11"], ["LCD D4", "D5"], ["LCD D5", "D4"], ["LCD D6", "D3"], ["LCD D7", "D2"],
   ["Joystick X", "A1"], ["Joystick Y", "A2 (only used as extra randomness)"], ["Joystick button", "D7 (INPUT_PULLUP)"],
@@ -18,6 +27,32 @@ const pins = [
   ai={p.ai}
   repo={p.repo!}
 >
+  <section class="wrap block">
+    <p class="eyebrow">How it started</p>
+    <h2>A video game on a screen that only shows text</h2>
+    <div class="story">
+      <div class="prose">
+        <p>I was challenged to make a video game using nothing but a 16×2 LCD, the kind of screen that shows two rows of 16 text characters. No graphics, just character cells.</p>
+        <p>The trick I came up with: the LCD's controller lets you design up to <strong>8 custom characters</strong> of 5×8 dots, and the game uses all 8. Each one is a different combination of three things: an upper wall, a lower wall, and the ball. Three things that are each on or off make 2³ = 8 combinations, which exactly fills the 8 slots.</p>
+        <p>So every character cell can show two walls and a ball at once. That doubles the vertical resolution: two text rows become four lines of walls, and every frame is just picking the right one of the 8 characters for each of the 32 cells.</p>
+      </div>
+      <figure class="glyphs">
+        <div class="glyph-grid">
+          {glyphs.map((g) => (
+            <div class="glyph">
+              <div class="dots" role="img" aria-label={`Character ${g.i}: ${g.label}`}>
+                {g.rows.flatMap((r, y) => [4, 3, 2, 1, 0].map((bit) => <span class={(r >> bit) & 1 ? (y === 7 ? "on ball" : "on") : ""}></span>))}
+              </div>
+              <span class="gi">{g.i}</span>
+              <span class="gl">{g.label}</span>
+            </div>
+          ))}
+        </div>
+        <figcaption>The 8 custom characters, drawn from the bitmaps in <code>parkour_game.ino</code>. The top row of the screen only ever uses 0–3; the ball lives on the bottom row.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="wrap block">
     <p class="eyebrow">Try it</p>
     <h2>Play it right here</h2>
@@ -51,14 +86,12 @@ const pins = [
 
   <section class="wrap block">
     <p class="eyebrow">Under the hood</p>
-    <h2>Squeezing a game into 8 custom characters</h2>
+    <h2>More under the hood</h2>
     <div class="two">
       <div class="prose">
-        <p>A 16×2 LCD only shows text, but it lets you define <strong>8 custom 5×8 characters</strong>. The game draws two wall lines per text row (as bars on dot-rows 2 and 6 of each character) plus the player as a dot on the bottom row.</p>
-        <p>That's 3 independent on/off things per character: wall 1, wall 2, player. 2³ = 8 combinations, which exactly fills the 8 slots the LCD has. Every frame is just picking the right one of those 8 characters for each of the 32 cells.</p>
+        <p><strong>One clock, two speeds.</strong> A single timer runs at player speed, and the walls move on every 5th tick, so you always move 5× faster than the walls, even as everything speeds up.</p>
       </div>
       <div class="prose">
-        <p><strong>One clock, two speeds.</strong> A single timer runs at player speed, and the walls move on every 5th tick, so you always move 5× faster than the walls, even as everything speeds up.</p>
         <p><strong>Fair collisions.</strong> A wall line is only checked at the moment it scrolls off the bottom of the screen, not while you can still see it. You get until the very last moment to slip through.</p>
       </div>
     </div>
@@ -113,6 +146,20 @@ const pins = [
   .mode { font: 400 12px/1.3 var(--mono); color: var(--muted); }
   .note { color: var(--muted); font-size: 13.5px; margin: 16px 0 0; }
   .note code { font: 400 0.9em var(--mono); color: var(--ink-soft); }
+  .story { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+  .glyphs { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); padding: 24px; }
+  @media (max-width: 480px) { .glyphs { padding: 18px 14px; } .glyph-grid { gap: 16px 8px; } .gl { font-size: 11px; } }
+  .glyph-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 14px; }
+  .glyph { display: grid; justify-items: center; gap: 6px; text-align: center; }
+  .glyph { align-content: start; }
+  .dots { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(8, 1fr); gap: 2px; padding: 6px; border-radius: 6px; background: #1c2f8f; width: 64px; height: 96px; flex: none; }
+  .dots span { border-radius: 1px; background: rgba(120, 145, 255, 0.18); }
+  .dots span.on { background: #e8eeff; }
+  .gi { font: 500 12px/1 var(--mono); color: var(--accent); }
+  .gl { font-size: 12px; line-height: 1.3; color: var(--muted); }
+  .glyphs figcaption { margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .glyphs code { font: 400 0.9em var(--mono); color: var(--ink-soft); }
+  @media (max-width: 860px) { .story { grid-template-columns: minmax(0, 1fr); } }
   .pins { width: 100%; border-collapse: collapse; font-size: 15px; }
   .pins th { text-align: left; font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 12px 12px 0; }
   .pins td { padding: 11px 12px 11px 0; border-top: 1px solid var(--line); color: var(--ink-soft); }
