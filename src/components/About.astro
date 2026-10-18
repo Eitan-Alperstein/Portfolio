@@ -1,0 +1,64 @@
+---
+import { NOW, PHOTO } from "../data/site";
+---
+<section id="about" class="wrap">
+  <div class="grid">
+    <div class="portrait" data-reveal>
+      {PHOTO
+        ? <img src={PHOTO} alt="Eitan Alperstein" width="480" height="600" loading="lazy" />
+        : <div class="mono" aria-hidden="true"><span>EA</span></div>}
+    </div>
+    <div class="text">
+      <p class="eyebrow" data-reveal>About</p>
+      <h2 class="title" data-reveal style="--d: 60ms">Hi, I'm Eitan.</h2>
+      <div class="prose" data-reveal style="--d: 120ms">
+        <p>
+          I'm a junior in high school in Denver (class of 2028). I like making stuff for the sake of making stuff. Usually that means an idea turns into a working app by the end of the weekend.
+        </p>
+        <p>
+          A lot of what I build is for students, because that's who I am: practice tools for the SAT and AP Lang, a final-grade calculator, and the website for <strong>The Paw</strong>, my school's student newspaper, where I'm lead developer. The rest is simulations and experiments, like Voronoi diagrams on a sphere or 3D projection from scratch, mostly because I wanted to see how they work.
+        </p>
+        <p>
+          I also competed in the <strong>2025 NASA App Development Challenge</strong> with Team Space Lazer.
+        </p>
+      </div>
+
+      <div class="now" data-reveal style="--d: 180ms">
+        <p class="now-title"><span class="dot" aria-hidden="true"></span> Right now</p>
+        <ul>
+          {NOW.map((n) => <li><span class="label">{n.label}</span><span>{n.text}</span></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; grid-template-columns: minmax(220px, 360px) 1fr; gap: 72px; align-items: start; }
+  .portrait { position: sticky; top: 100px; }
+  .portrait img, .mono { width: 100%; aspect-ratio: 4 / 5; border-radius: var(--radius); object-fit: cover; display: block; }
+  .mono {
+    display: grid; place-items: center; border: 1px solid var(--line);
+    background:
+      radial-gradient(70% 60% at 30% 25%, rgba(159,177,255,0.16), transparent 70%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 14px),
+      var(--surface);
+  }
+  .mono span { font-size: 72px; font-weight: 700; letter-spacing: -0.05em; color: rgba(236,238,242,0.9); }
+  .prose { margin-top: 26px; color: var(--ink-soft); font-size: 17px; max-width: 640px; }
+  .prose p { margin: 0 0 18px; }
+  .prose strong { color: var(--ink); font-weight: 600; }
+  .now { margin-top: 36px; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px; background: var(--bg-raised); max-width: 640px; }
+  .now-title { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(159,177,255,.6); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(159,177,255,.5); } 70% { box-shadow: 0 0 0 9px rgba(159,177,255,0); } 100% { box-shadow: 0 0 0 0 rgba(159,177,255,0); } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  li { display: grid; grid-template-columns: 80px 1fr; gap: 12px; font-size: 15px; color: var(--ink-soft); }
+  .label { font: 400 12.5px/1.8 var(--mono); color: var(--accent); }
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; gap: 36px; }
+    .portrait { position: static; max-width: 260px; }
+  }
+  @media (max-width: 520px) { li { grid-template-columns: 1fr; gap: 2px; } }
+</style>

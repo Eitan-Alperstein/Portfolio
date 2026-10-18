@@ -1,0 +1,18 @@
+---
+// An abstract newspaper front page: masthead, lead story, columns.
+const col = (x: number, y: number, w: number, n: number) =>
+  Array.from({ length: n }, (_, i) => ({ x, y: y + i * 9, w: i === n - 1 ? w * 0.6 : w }));
+const lines = [...col(84, 168, 70, 9), ...col(166, 168, 70, 9), ...col(248, 168, 70, 9)];
+---
+<svg viewBox="0 0 400 300" class="art" aria-hidden="true">
+  <rect x="72" y="34" width="256" height="248" rx="6" fill="#12141a" stroke="rgba(220,226,255,0.16)" />
+  <text x="200" y="70" text-anchor="middle" fill="#eceef2" font-family="Georgia, serif" font-size="26" font-weight="700" letter-spacing="1">The Paw</text>
+  <line x1="84" x2="316" y1="82" y2="82" stroke="rgba(220,226,255,0.3)" />
+  <line x1="84" x2="316" y1="86" y2="86" stroke="rgba(220,226,255,0.12)" />
+  <rect x="84" y="96" width="140" height="58" rx="3" fill="rgba(159,177,255,0.14)" stroke="rgba(159,177,255,0.35)" />
+  <rect x="234" y="98" width="82" height="7" rx="2" fill="rgba(236,238,242,0.75)" />
+  <rect x="234" y="111" width="70" height="7" rx="2" fill="rgba(236,238,242,0.75)" />
+  {[0,1,2,3].map((i) => <rect x="234" y={126 + i * 8} width={i === 3 ? 44 : 82} height="3" rx="1.5" fill="rgba(220,226,255,0.25)" />)}
+  {lines.map((l) => <rect x={l.x} y={l.y} width={l.w} height="3" rx="1.5" fill="rgba(220,226,255,0.2)" />)}
+  <rect x="84" y="254" width="232" height="16" rx="3" fill="none" stroke="rgba(220,226,255,0.12)" />
+</svg>

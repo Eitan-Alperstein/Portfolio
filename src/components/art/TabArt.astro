@@ -1,0 +1,25 @@
+---
+// Six guitar strings with a run of fret numbers, like a line of tab.
+const strings = ["e", "B", "G", "D", "A", "E"];
+const notes: [number, number, string][] = [
+  [70, 5, "0"], [100, 4, "2"], [130, 3, "2"], [160, 2, "1"], [190, 1, "0"], [220, 0, "0"],
+  [250, 1, "1"], [280, 2, "2"], [310, 0, "3"], [340, 1, "3"],
+];
+const y0 = 74, gap = 30;
+---
+<svg viewBox="0 0 400 300" class="art" aria-hidden="true">
+  {strings.map((s, i) => (
+    <g>
+      <text x="34" y={y0 + i * gap + 4} fill="#7d8290" font-family="JetBrains Mono, monospace" font-size="12">{s}</text>
+      <line x1="52" x2="372" y1={y0 + i * gap} y2={y0 + i * gap} stroke="rgba(220,226,255,0.22)" />
+    </g>
+  ))}
+  <line x1="52" x2="52" y1={y0} y2={y0 + 5 * gap} stroke="rgba(220,226,255,0.4)" />
+  <line x1="250" x2="250" y1={y0 - 18} y2={y0 + 5 * gap + 18} stroke="#9fb1ff" stroke-width="1.5" opacity="0.8" />
+  {notes.map(([x, s, f], i) => (
+    <g>
+      <rect x={x - 9} y={y0 + s * gap - 10} width="18" height="20" rx="4" fill={i === 6 ? "#9fb1ff" : "#0b0c0f"} />
+      <text x={x} y={y0 + s * gap + 4.5} text-anchor="middle" fill={i === 6 ? "#0b0c0f" : "#eceef2"} font-family="JetBrains Mono, monospace" font-size="13" font-weight="500">{f}</text>
+    </g>
+  ))}
+</svg>

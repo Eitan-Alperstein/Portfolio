@@ -1,0 +1,67 @@
+---
+import { EMAIL } from "../data/site";
+---
+<section class="hero" id="top">
+  <canvas class="field" aria-hidden="true"></canvas>
+  <div class="fade" aria-hidden="true"></div>
+  <div class="wrap content">
+    <p class="eyebrow" data-reveal>Junior · Class of 2028 · Denver</p>
+    <h1 data-reveal style="--d: 80ms">
+      I like making stuff<br /><span>for the sake of making stuff.</span>
+    </h1>
+    <p class="lede" data-reveal style="--d: 160ms">
+      I'm Eitan. I build tools for students like me (study apps, a school newspaper's website, calculators) and simulations for anyone who likes watching math move.
+    </p>
+    <div class="actions" data-reveal style="--d: 240ms">
+      <a class="btn primary" href="#work">See what I've made</a>
+      <a class="btn" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    </div>
+  </div>
+  <p class="hint wrap" aria-hidden="true">Move your cursor around. Every cell is the set of points closest to one seed.</p>
+</section>
+
+<script>
+  import { startField } from "../scripts/field";
+  const c = document.querySelector<HTMLCanvasElement>(".hero .field");
+  if (c) startField(c);
+</script>
+
+<style>
+  .hero {
+    position: relative; min-height: min(100svh, 960px); padding: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden; isolation: isolate;
+  }
+  .field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+  .fade {
+    position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(60% 55% at 22% 48%, rgba(11,12,15,0.86), rgba(11,12,15,0) 70%),
+      linear-gradient(to bottom, rgba(11,12,15,0) 60%, var(--bg) 100%);
+  }
+  .content { padding-top: 64px; pointer-events: none; }
+  .content a { pointer-events: auto; }
+  h1 {
+    font-size: clamp(40px, 7vw, 84px);
+    line-height: 0.98; letter-spacing: -0.045em; font-weight: 680;
+    margin: 22px 0 0; max-width: 1100px; text-wrap: balance;
+  }
+  h1 span { color: var(--muted); }
+  .lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-soft); max-width: 600px; margin: 26px 0 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .btn {
+    display: inline-flex; align-items: center; height: 46px; padding: 0 20px;
+    border-radius: 999px; border: 1px solid var(--line-strong);
+    font-size: 15px; font-weight: 500; background: rgba(11,12,15,0.5);
+    transition: border-color .2s, background .2s, transform .2s;
+  }
+  .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  .hint {
+    position: absolute; left: 0; right: 0; bottom: 28px;
+    font: 400 12px/1.4 var(--mono); color: var(--muted); opacity: .75;
+  }
+  @media (hover: none) { .hint { display: none; } }
+  @media (max-width: 640px) { .btn { height: 44px; font-size: 14px; } }
+</style>

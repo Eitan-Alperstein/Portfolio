@@ -1,0 +1,50 @@
+---
+// A Voronoi diagram computed at build time and bent onto a sphere with a
+// fisheye projection, as a nod to Spherical Voronoi.
+import { Delaunay } from "d3-delaunay";
+
+let s = 7;
+const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+const R = 1;
+const pts: [number, number][] = [];
+while (pts.length < 46) {
+  const x = rand() * 2 - 1, y = rand() * 2 - 1;
+  if (x * x + y * y < 1.15) pts.push([x, y]);
+}
+const vor = Delaunay.from(pts).voronoi([-1.3, -1.3, 1.3, 1.3]);
+const cx = 200, cy = 150, size = 118;
+const bend = ([x, y]: [number, number]) => {
+  const r = Math.hypot(x, y);
+  if (r === 0) return [cx, cy];
+  const rr = Math.sin(Math.min(r, R) * Math.PI / 2);
+  return [cx + (x / r) * rr * size, cy + (y / r) * rr * size];
+};
+// Subdivide each edge so straight lines curve with the projection.
+const cells = pts.map((_, i) => {
+  const poly = vor.cellPolygon(i);
+  if (!poly) return "";
+  const out: number[][] = [];
+  for (let k = 0; k < poly.length - 1; k++) {
+    const [a, b] = [poly[k], poly[k + 1]];
+    for (let t = 0; t < 8; t++) out.push(bend([a[0] + (b[0] - a[0]) * t / 8, a[1] + (b[1] - a[1]) * t / 8]));
+  }
+  return "M" + out.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join("L") + "Z";
+});
+const lit = new Set([3, 11, 19, 27]);
+---
+<svg viewBox="0 0 400 300" class="art" aria-hidden="true">
+  <defs>
+    <clipPath id="globe"><circle cx={cx} cy={cy} r={size} /></clipPath>
+    <radialGradient id="shade" cx="38%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#9fb1ff" stop-opacity="0.16" />
+      <stop offset="100%" stop-color="#0b0c0f" stop-opacity="0.9" />
+    </radialGradient>
+  </defs>
+  <g clip-path="url(#globe)">
+    <circle cx={cx} cy={cy} r={size} fill="#12141a" />
+    {cells.map((d, i) => <path d={d} fill={lit.has(i) ? "rgba(159,177,255,0.16)" : "none"} stroke="rgba(220,226,255,0.32)" stroke-width="0.8" />)}
+    {pts.map((p) => { const [x, y] = bend(p); return <circle cx={x} cy={y} r="1.6" fill="#eceef2" opacity="0.7" />; })}
+    <circle cx={cx} cy={cy} r={size} fill="url(#shade)" />
+  </g>
+  <circle cx={cx} cy={cy} r={size} fill="none" stroke="rgba(220,226,255,0.25)" />
+</svg>

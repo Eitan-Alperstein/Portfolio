@@ -1,0 +1,69 @@
+---
+import projects from "../data/projects.json";
+import Arrow from "./Arrow.astro";
+import PaperArt from "./art/PaperArt.astro";
+import TabArt from "./art/TabArt.astro";
+import SphereArt from "./art/SphereArt.astro";
+
+const art = { "the-paw": PaperArt, "tab-teacher": TabArt, "spherical-voronoi": SphereArt } as const;
+const hero = projects.filter((p) => p.hero).sort((a, b) => a.hero! - b.hero!);
+---
+<section id="work" class="wrap">
+  <p class="eyebrow" data-reveal>Selected work</p>
+  <h2 class="title" data-reveal style="--d: 60ms">Three things I'm proud of.</h2>
+
+  <div class="featured">
+    {hero.map((p, i) => {
+      const Art = art[p.slug as keyof typeof art];
+      return (
+        <article class={`card c${i}`} data-reveal style={`--d: ${i * 90}ms`}>
+          <div class="visual"><Art /></div>
+          <div class="body">
+            <p class="num">0{i + 1}</p>
+            <h3>{p.title}</h3>
+            <p class="desc">{p.long}</p>
+            <div class="tags">{p.stack.map((t) => <span>{t}</span>)}</div>
+            <div class="links">
+              {p.url && <a class="link-arrow" href={p.url} target="_blank" rel="noopener">Visit <Arrow /></a>}
+              {p.repo && <a class="link-arrow" href={p.repo} target="_blank" rel="noopener">Code <Arrow /></a>}
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .featured { display: grid; gap: 20px; margin-top: 48px; grid-template-columns: repeat(6, 1fr); }
+  .card {
+    grid-column: span 3;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: border-color .3s, transform .3s;
+  }
+  .card.c0 { grid-column: span 6; flex-direction: row; }
+  .card.c0 .visual { flex: 1.1; aspect-ratio: auto; min-height: 340px; border-bottom: 0; border-right: 1px solid var(--line); }
+  .card.c0 .body { flex: 1; justify-content: center; padding: 40px; }
+  .card:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .visual {
+    aspect-ratio: 4 / 3; display: grid; place-items: center;
+    background:
+      radial-gradient(80% 80% at 50% 40%, rgba(159,177,255,0.06), transparent 70%),
+      var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .visual :global(.art) { width: 100%; height: 100%; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .card:hover .visual :global(.art) { transform: scale(1.035); }
+  .body { padding: 28px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .num { font: 500 12px/1 var(--mono); color: var(--accent); margin: 0; }
+  h3 { margin: 0; font-size: 26px; letter-spacing: -0.025em; font-weight: 650; }
+  .desc { margin: 0; color: var(--ink-soft); font-size: 15.5px; flex: 1; }
+  .links { display: flex; gap: 22px; margin-top: 4px; }
+  @media (max-width: 860px) {
+    .card, .card.c0 { grid-column: span 6; flex-direction: column; }
+    .card.c0 .visual { min-height: 0; aspect-ratio: 4 / 3; border-right: 0; border-bottom: 1px solid var(--line); }
+    .card.c0 .body { padding: 28px; }
+  }
+  @media (max-width: 640px) { .body, .card.c0 .body { padding: 22px; } }
+</style>
