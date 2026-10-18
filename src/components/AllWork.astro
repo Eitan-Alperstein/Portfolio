@@ -1,6 +1,7 @@
 ---
 import projects from "../data/projects.json";
-import Arrow from "./Arrow.astro";
+import Tags from "./Tags.astro";
+import Links from "./Links.astro";
 
 const groups = [
   { id: "students", title: "For students", note: "Things I made because I'm a student and wanted them to exist." },
@@ -27,14 +28,10 @@ const groups = [
             <li>
               <div class="name">
                 <span>{p.title}</span>
-                <div class="tags">{p.stack.slice(0, 3).map((t) => <span>{t}</span>)}</div>
+                <Tags stack={p.stack} ai={p.ai} limit={3} />
               </div>
               <p class="blurb">{p.blurb}</p>
-              <div class="links">
-                {p.url && <a class="link-arrow" href={p.url} target="_blank" rel="noopener" aria-label={`Visit ${p.title}`}>Visit <Arrow /></a>}
-                {p.repo && <a class="link-arrow" href={p.repo} target="_blank" rel="noopener" aria-label={`${p.title} source code`}>Code <Arrow /></a>}
-                {!p.url && !p.repo && <span class="private">Private for now</span>}
-              </div>
+              <Links title={p.title} url={p.url} repo={p.repo} showPrivate />
             </li>
           ))}
         </ul>
@@ -58,8 +55,6 @@ const groups = [
   .name { display: flex; flex-direction: column; gap: 8px; }
   .name > span { font-weight: 600; font-size: 16px; }
   .blurb { margin: 0; color: var(--ink-soft); font-size: 15px; }
-  .links { display: flex; gap: 18px; white-space: nowrap; }
-  .private { font: 400 12.5px/1 var(--mono); color: var(--muted); }
   @media (max-width: 960px) {
     .group { grid-template-columns: 1fr; gap: 18px; }
   }

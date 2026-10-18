@@ -1,6 +1,7 @@
 ---
 import projects from "../data/projects.json";
-import Arrow from "./Arrow.astro";
+import Tags from "./Tags.astro";
+import Links from "./Links.astro";
 import PaperArt from "./art/PaperArt.astro";
 import TabArt from "./art/TabArt.astro";
 import SphereArt from "./art/SphereArt.astro";
@@ -22,11 +23,8 @@ const hero = projects.filter((p) => p.hero).sort((a, b) => a.hero! - b.hero!);
             <p class="num">0{i + 1}</p>
             <h3>{p.title}</h3>
             <p class="desc">{p.long}</p>
-            <div class="tags">{p.stack.map((t) => <span>{t}</span>)}</div>
-            <div class="links">
-              {p.url && <a class="link-arrow" href={p.url} target="_blank" rel="noopener">Visit <Arrow /></a>}
-              {p.repo && <a class="link-arrow" href={p.repo} target="_blank" rel="noopener">Code <Arrow /></a>}
-            </div>
+            <Tags stack={p.stack} ai={p.ai} />
+            <Links title={p.title} url={p.url} repo={p.repo} />
           </div>
         </article>
       );
@@ -59,7 +57,6 @@ const hero = projects.filter((p) => p.hero).sort((a, b) => a.hero! - b.hero!);
   .num { font: 500 12px/1 var(--mono); color: var(--accent); margin: 0; }
   h3 { margin: 0; font-size: 26px; letter-spacing: -0.025em; font-weight: 650; }
   .desc { margin: 0; color: var(--ink-soft); font-size: 15.5px; flex: 1; }
-  .links { display: flex; gap: 22px; margin-top: 4px; }
   @media (max-width: 860px) {
     .card, .card.c0 { grid-column: span 6; flex-direction: column; }
     .card.c0 .visual { min-height: 0; aspect-ratio: 4 / 3; border-right: 0; border-bottom: 1px solid var(--line); }

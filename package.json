@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "astro dev",
         "build": "astro build",
-        "preview": "astro preview"
+        "preview": "astro preview",
+        "shots": "node scripts/shots.mjs"
     },
     "engines": {
         "node": "24.x"

@@ -1,0 +1,8 @@
+---
+interface Props { stack: string[]; ai?: boolean; limit?: number }
+const { stack, ai = false, limit } = Astro.props;
+---
+<div class="tags">
+  {ai && <span class="ai" title="Built with AI assistance">AI</span>}
+  {(limit ? stack.slice(0, limit) : stack).map((t) => <span>{t}</span>)}
+</div>

@@ -7,13 +7,14 @@
       "TypeScript"
     ],
     "featured": true,
-    "url": "https://tab-teacher.vercel.app",
+    "url": "https://tab.eitanalperstein.com",
     "repo": "https://github.com/Eitan-Alperstein/tab-teacher",
     "updated": "2026-10-17",
     "group": "mine",
     "hero": 2,
     "slug": "tab-teacher",
-    "long": "A practice app for learning guitar solos. Pick a song from the menu and work through the solo with the tab in front of you. Built because I wanted it for my own practicing."
+    "long": "A practice app for learning guitar solos. Pick a song from the menu and work through the solo with the tab in front of you. Built because I wanted it for my own practicing.",
+    "ai": true
   },
   {
     "title": "The Paw",
@@ -30,7 +31,8 @@
     "group": "students",
     "hero": 1,
     "slug": "the-paw",
-    "long": "The website for Denver Jewish Day School's student newspaper, where I'm lead developer. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code."
+    "long": "The website for Denver Jewish Day School's student newspaper, where I'm lead developer. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code.",
+    "ai": true
   },
   {
     "title": "Daily Tracker",
@@ -41,10 +43,11 @@
       "Rust"
     ],
     "featured": true,
-    "url": null,
+    "url": "/daily-tracker",
     "repo": "https://github.com/Eitan-Alperstein/daily-tracker",
     "updated": "2026-08-13",
-    "group": "mine"
+    "group": "mine",
+    "ai": true
   },
   {
     "title": "The Forge",
@@ -59,7 +62,8 @@
     "url": "https://forge.eitanalperstein.com",
     "repo": null,
     "updated": "2026-04-23",
-    "group": "students"
+    "group": "students",
+    "ai": true
   },
   {
     "title": "Spherical Voronoi",
@@ -69,13 +73,14 @@
       "Canvas"
     ],
     "featured": true,
-    "url": null,
+    "url": "https://voronoi.eitanalperstein.com",
     "repo": "https://github.com/Eitan-Alperstein/SphericalVoronoi",
     "updated": "2026-02-15",
     "group": "sims",
     "hero": 3,
     "slug": "spherical-voronoi",
-    "long": "Voronoi diagrams, but on the surface of a sphere instead of a flat plane. Seed points split the globe into cells, each one holding everything closer to its seed than to any other."
+    "long": "Voronoi diagrams, but on the surface of a sphere instead of a flat plane. Seed points split the globe into cells, each one holding everything closer to its seed than to any other.",
+    "ai": false
   },
   {
     "title": "Final Grade Calculator",
@@ -84,10 +89,11 @@
       "HTML/CSS/JS"
     ],
     "featured": true,
-    "url": "https://final-grade-calculator-liart.vercel.app",
+    "url": "https://finalgrade.eitanalperstein.com",
     "repo": "https://github.com/Eitan-Alperstein/final-grade-calculator",
     "updated": "2025-05-23",
-    "group": "students"
+    "group": "students",
+    "ai": false
   },
   {
     "title": "3D Projection",
@@ -100,7 +106,8 @@
     "url": "https://projection.eitanalperstein.com",
     "repo": "https://github.com/Eitan-Alperstein/3D-Cube",
     "updated": "2024-08-31",
-    "group": "sims"
+    "group": "sims",
+    "ai": false
   },
   {
     "title": "Desmos SAT Prep",
@@ -110,10 +117,11 @@
       "Tailwind"
     ],
     "featured": false,
-    "url": "https://desmos-guide-phi.vercel.app",
+    "url": "https://desmos.eitanalperstein.com",
     "repo": "https://github.com/Eitan-Alperstein/desmos-guide",
     "updated": "2026-10-08",
-    "group": "students"
+    "group": "students",
+    "ai": true
   },
   {
     "title": "ReelTab",
@@ -126,20 +134,22 @@
     "url": null,
     "repo": null,
     "updated": "2026-08-28",
-    "group": "mine"
+    "group": "mine",
+    "ai": true
   },
   {
     "title": "Arduino Parkour",
-    "blurb": "Parkour game for Arduino.",
+    "blurb": "A wall-dodging game on a 16×2 LCD with a joystick. You can play a simulation of it in the browser.",
     "stack": [
       "Arduino",
       "C++"
     ],
     "featured": false,
-    "url": null,
+    "url": "/arduino-parkour",
     "repo": "https://github.com/Eitan-Alperstein/arduino-parkour",
     "updated": "2026-07-10",
-    "group": "sims"
+    "group": "sims",
+    "ai": true
   },
   {
     "title": "Training Log",
@@ -153,7 +163,8 @@
     "url": "https://gym-five-gold.vercel.app",
     "repo": null,
     "updated": "2026-06-08",
-    "group": "mine"
+    "group": "mine",
+    "ai": true
   },
   {
     "title": "Lloyd Relaxation",
@@ -163,9 +174,10 @@
       "Canvas"
     ],
     "featured": false,
-    "url": null,
+    "url": "https://lloyd.eitanalperstein.com",
     "repo": "https://github.com/Eitan-Alperstein/lloyd",
     "updated": "2025-04-19",
-    "group": "sims"
+    "group": "sims",
+    "ai": false
   }
 ]

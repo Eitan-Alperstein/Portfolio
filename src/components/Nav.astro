@@ -3,17 +3,27 @@ import { EMAIL } from "../data/site";
 ---
 <header class="nav">
   <div class="wrap row">
-    <a href="#top" class="brand" aria-label="Eitan Alperstein, back to top">
+    <a href="/#top" class="brand" data-home aria-label="Eitan Alperstein, home">
       <img src="/favicon.svg" alt="" width="22" height="22" />
       <span>Eitan Alperstein</span>
     </a>
     <nav aria-label="Primary">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
+      <a href="/#work" data-home>Work</a>
+      <a href="/#about" data-home>About</a>
       <a href={`mailto:${EMAIL}`} class="cta">Say hi</a>
     </nav>
   </div>
 </header>
+
+<script is:inline>
+  // On a project subdomain (tracker., parkour.), "/" is the project page,
+  // so links back to the main site need the full domain.
+  if (/^(tracker|parkour)\./.test(location.hostname)) {
+    document.querySelectorAll("a[data-home]").forEach((a) => {
+      a.href = "https://www.eitanalperstein.com" + a.getAttribute("href");
+    });
+  }
+</script>
 
 <style>
   .nav {

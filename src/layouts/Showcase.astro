@@ -1,0 +1,58 @@
+---
+// Shared shell for project showcase pages (non-web projects).
+import Layout from "./Layout.astro";
+import Nav from "../components/Nav.astro";
+import Tags from "../components/Tags.astro";
+import Arrow from "../components/Arrow.astro";
+
+interface Props { title: string; tagline: string; description: string; stack: string[]; ai?: boolean; repo: string; eyebrow: string }
+const { title, tagline, description, stack, ai, repo, eyebrow } = Astro.props;
+---
+<Layout title={`${title} | Eitan Alperstein`} description={description}>
+  <Nav />
+  <main class="showcase">
+    <header class="wrap hero">
+      <a class="back" href="/#work" data-home>← All projects</a>
+      <p class="eyebrow" data-reveal>{eyebrow}</p>
+      <h1 data-reveal style="--d: 60ms">{title}</h1>
+      <p class="tagline" data-reveal style="--d: 120ms">{tagline}</p>
+      <div class="meta" data-reveal style="--d: 180ms">
+        <Tags stack={stack} ai={ai} />
+        <a class="btn" href={repo} target="_blank" rel="noopener">View on GitHub <Arrow /></a>
+      </div>
+    </header>
+    <slot />
+  </main>
+  <footer class="wrap foot">
+    <a href="/#work" data-home class="link-arrow">← Back to all projects</a>
+    <span>© {new Date().getFullYear()} Eitan Alperstein</span>
+  </footer>
+</Layout>
+
+<style>
+  .hero { padding-top: 140px; }
+  .back { font: 500 13px/1 var(--mono); color: var(--muted); display: block; width: fit-content; margin-bottom: 28px; }
+  .back:hover { color: var(--accent); }
+  h1 { font-size: clamp(42px, 7vw, 76px); line-height: 1; letter-spacing: -0.045em; font-weight: 680; margin: 18px 0 0; }
+  .tagline { font-size: clamp(18px, 2vw, 22px); color: var(--ink-soft); max-width: 640px; margin: 20px 0 0; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 24px; margin-top: 30px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px;
+    border-radius: 999px; border: 1px solid var(--line-strong); font-size: 14px; font-weight: 500;
+    transition: border-color .2s, background .2s;
+  }
+  .btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .showcase :global(.block) { margin-top: 110px; }
+  .showcase :global(.block h2) { font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -0.03em; font-weight: 650; margin: 16px 0 28px; }
+  .showcase :global(.features) { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .showcase :global(.features li) { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; color: var(--ink-soft); font-size: 15px; }
+  .showcase :global(.features strong) { display: block; color: var(--ink); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .showcase :global(.prose) { color: var(--ink-soft); font-size: 16.5px; max-width: 720px; }
+  .showcase :global(.prose p) { margin: 0 0 16px; }
+  .showcase :global(.prose a) { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .showcase :global(.prose code), .showcase :global(td code) { font: 400 0.9em var(--mono); color: var(--ink); background: var(--surface); padding: 2px 6px; border-radius: 5px; }
+  .showcase :global(pre) { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; overflow-x: auto; font: 400 13.5px/1.7 var(--mono); color: var(--ink); margin: 0; }
+  .showcase :global(.two) { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .showcase :global(.two) { grid-template-columns: 1fr; } }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 110px; padding-bottom: 48px; color: var(--muted); font-size: 13.5px; }
+</style>

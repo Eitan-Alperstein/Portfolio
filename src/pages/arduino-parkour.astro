@@ -1,0 +1,120 @@
+---
+import Showcase from "../layouts/Showcase.astro";
+import Gallery from "../components/Gallery.astro";
+import projects from "../data/projects.json";
+
+const p = projects.find((x) => x.title === "Arduino Parkour")!;
+const pins = [
+  ["LCD RS", "D12"], ["LCD E", "D11"], ["LCD D4", "D5"], ["LCD D5", "D4"], ["LCD D6", "D3"], ["LCD D7", "D2"],
+  ["Joystick X", "A1"], ["Joystick Y", "A2 (only used as extra randomness)"], ["Joystick button", "D7 (INPUT_PULLUP)"],
+];
+---
+<Showcase
+  title="Arduino Parkour"
+  eyebrow="Arduino game · C++"
+  tagline="A dodge-the-walls game on a 16×2 character LCD. Walls scroll toward you; steer through the gap with a joystick. It gets faster and meaner the longer you last."
+  description="Arduino Parkour: a wall-dodging game for Arduino with a 16x2 LCD and a joystick, with a playable in-browser simulation."
+  stack={["Arduino", "C++"]}
+  ai={p.ai}
+  repo={p.repo!}
+>
+  <section class="wrap block">
+    <p class="eyebrow">Try it</p>
+    <h2>Play it right here</h2>
+    <div class="sim" tabindex="0" aria-label="Simulated 16 by 2 LCD running Arduino Parkour. Use left and right arrow keys to play.">
+      <div class="board">
+        <canvas role="img" aria-label="LCD screen"></canvas>
+      </div>
+      <div class="controls">
+        <button type="button" data-dir="l" aria-label="Move left">◀</button>
+        <div class="readout">
+          <span class="score">Score <b data-score>0</b></span>
+          <span class="mode" data-mode></span>
+        </div>
+        <button type="button" data-dir="r" aria-label="Move right">▶</button>
+      </div>
+      <p class="note">A faithful port of the game logic from <code>parkour_game.ino</code>: same timings, ramp and collision rules. Arrow keys or the buttons take over from the demo.</p>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Features</p>
+    <h2>How it plays</h2>
+    <ul class="features">
+      <li><strong>Always survivable</strong>Each new gap spawns within a few columns of the last one, so there's always a path, just not always an easy one.</li>
+      <li><strong>Difficulty ramp</strong>Walls speed up from 1.6s to 0.5s per step, gaps shrink from 5 columns to 1, and the gap can jump farther between lines, all on the same curve.</li>
+      <li><strong>Wraparound</strong>Walk off the left edge and you come back on the right, Pac-Man style.</li>
+      <li><strong>Self-calibrating stick</strong>The joystick's center is measured at boot, so it works with any stick without hardcoded thresholds.</li>
+      <li><strong>High score</strong>Kept across rounds until you power it off. Press the joystick to play again.</li>
+    </ul>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Under the hood</p>
+    <h2>Squeezing a game into 8 custom characters</h2>
+    <div class="two">
+      <div class="prose">
+        <p>A 16×2 LCD only shows text, but it lets you define <strong>8 custom 5×8 characters</strong>. The game draws two wall lines per text row (as bars on dot-rows 2 and 6 of each character) plus the player as a dot on the bottom row.</p>
+        <p>That's 3 independent on/off things per character: wall 1, wall 2, player. 2³ = 8 combinations, which exactly fills the 8 slots the LCD has. Every frame is just picking the right one of those 8 characters for each of the 32 cells.</p>
+      </div>
+      <div class="prose">
+        <p><strong>One clock, two speeds.</strong> A single timer runs at player speed, and the walls move on every 5th tick, so you always move 5× faster than the walls, even as everything speeds up.</p>
+        <p><strong>Fair collisions.</strong> A wall line is only checked at the moment it scrolls off the bottom of the screen, not while you can still see it. You get until the very last moment to slip through.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Hardware</p>
+    <h2>Wiring</h2>
+    <div class="two">
+      <table class="pins">
+        <thead><tr><th>Part</th><th>Arduino pin</th></tr></thead>
+        <tbody>{pins.map(([a, b]) => <tr><td>{a}</td><td><code>{b}</code></td></tr>)}</tbody>
+      </table>
+      <div class="prose">
+        <p>An Arduino Uno (or compatible), a 16×2 HD44780 LCD wired in 4-bit mode, and an analog joystick module. That's it.</p>
+        <p>Open <code>parkour_game/parkour_game.ino</code> in the Arduino IDE (it uses the built-in <code>LiquidCrystal</code> library) and upload.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Photos</p>
+    <h2>The real thing</h2>
+    <Gallery slug="arduino-parkour" alt="Arduino Parkour" />
+  </section>
+</Showcase>
+
+<script>
+  import { startLcd } from "../scripts/lcd";
+  const el = document.querySelector<HTMLElement>(".sim");
+  if (el) startLcd(el);
+</script>
+
+<style>
+  .sim { max-width: 760px; outline: none; }
+  .sim:focus-visible .board { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .board {
+    background: linear-gradient(180deg, #1d6b3f, #13512f); padding: 18px; border-radius: 14px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 20px 50px -20px rgba(0,0,0,0.7);
+  }
+  canvas { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 0 0 6px #0d0f14, 0 0 30px rgba(110, 140, 255, 0.25); }
+  .controls { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; }
+  .controls button {
+    width: 56px; height: 48px; border-radius: 12px; border: 1px solid var(--line-strong);
+    background: var(--bg-raised); color: var(--ink); font-size: 16px; cursor: pointer; touch-action: manipulation;
+    transition: border-color .2s, background .2s;
+  }
+  .controls button:hover, .controls button:active { border-color: var(--accent); background: var(--accent-soft); }
+  .readout { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+  .score { font: 500 14px/1 var(--mono); color: var(--ink-soft); }
+  .score b { color: var(--ink); }
+  .mode { font: 400 12px/1.3 var(--mono); color: var(--muted); }
+  .note { color: var(--muted); font-size: 13.5px; margin: 16px 0 0; }
+  .note code { font: 400 0.9em var(--mono); color: var(--ink-soft); }
+  .pins { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .pins th { text-align: left; font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 12px 12px 0; }
+  .pins td { padding: 11px 12px 11px 0; border-top: 1px solid var(--line); color: var(--ink-soft); }
+  @media (max-width: 520px) { .board { padding: 10px; } }
+</style>

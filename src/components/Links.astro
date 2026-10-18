@@ -1,0 +1,14 @@
+---
+import Arrow from "./Arrow.astro";
+interface Props { title: string; url?: string | null; repo?: string | null; showPrivate?: boolean }
+const { title, url, repo, showPrivate = false } = Astro.props;
+// Showcase pages on this site ("/daily-tracker") open in the same tab.
+const internal = url?.startsWith("/");
+---
+<div class="links">
+  {url && (internal
+    ? <a class="link-arrow" href={url} aria-label={`About ${title}`}>Visit <Arrow /></a>
+    : <a class="link-arrow" href={url} target="_blank" rel="noopener" aria-label={`Visit ${title}`}>Visit <Arrow /></a>)}
+  {repo && <a class="link-arrow" href={repo} target="_blank" rel="noopener" aria-label={`${title} source code`}>Code <Arrow /></a>}
+  {showPrivate && !url && !repo && <span class="private">Private for now</span>}
+</div>

@@ -1,0 +1,61 @@
+---
+import Showcase from "../layouts/Showcase.astro";
+import Gallery from "../components/Gallery.astro";
+import projects from "../data/projects.json";
+
+const p = projects.find((x) => x.title === "Daily Tracker")!;
+---
+<Showcase
+  title="Daily Tracker"
+  eyebrow="macOS app · Tauri"
+  tagline="A native habit tracker for the Mac. Track anything daily or on chosen weekdays, watch your streaks grow, and get nudged once a day, even on your phone."
+  description="Daily Tracker: a native macOS habit tracker with streaks, heatmaps and phone reminders, built with Tauri."
+  stack={["Tauri", "Rust", "TypeScript", "Vite"]}
+  ai={p.ai}
+  repo={p.repo!}
+>
+  <section class="wrap block">
+    <p class="eyebrow">Screenshots</p>
+    <h2>What it looks like</h2>
+    <Gallery slug="daily-tracker" alt="Daily Tracker" />
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Features</p>
+    <h2>What it does</h2>
+    <ul class="features">
+      <li><strong>Three kinds of trackers</strong>Yes/no ("meditated"), numbers with a goal and unit ("8 glasses"), and durations ("30 min reading").</li>
+      <li><strong>Flexible schedules</strong>Every day, or only on the weekdays you pick. Days you didn't schedule don't break a streak.</li>
+      <li><strong>Stats that motivate</strong>Streaks, a GitHub-style heatmap, a monthly calendar, bar charts and progress rings.</li>
+      <li><strong>Reminders</strong>A native macOS notification each day, plus an optional push to your phone through ntfy.</li>
+      <li><strong>Local-first</strong>Everything is stored as one JSON file on your Mac, with export and import. No account, no server.</li>
+      <li><strong>Light or dark</strong>Follows the system theme, or pick one.</li>
+    </ul>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Under the hood</p>
+    <h2>Two decisions I'm happy with</h2>
+    <div class="two">
+      <div class="prose">
+        <p><strong>History that stays honest.</strong> Each day's entry stores a snapshot of whether it hit the goal, and what the goal was <em>at that moment</em>. If you raise your goal from 6 glasses to 8 next month, last month still shows what actually happened instead of being quietly rewritten.</p>
+      </div>
+      <div class="prose">
+        <p><strong>No timezone bugs.</strong> "Which day is this?" is always stored as a local <code>YYYY-MM-DD</code> string, never a timestamp. That sidesteps the classic bug where an entry logged at 11pm lands on the wrong day because of UTC.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="eyebrow">Build it yourself</p>
+    <h2>Run it on your Mac</h2>
+    <div class="prose">
+      <p>You'll need Node and the <a href="https://tauri.app/start/prerequisites/" target="_blank" rel="noopener">Tauri prerequisites</a> (the Rust toolchain).</p>
+    </div>
+    <pre><code>git clone https://github.com/Eitan-Alperstein/daily-tracker
+cd daily-tracker
+npm install
+npm run tauri dev     # run the app
+npm run tauri build   # build a .app / .dmg</code></pre>
+  </section>
+</Showcase>
