@@ -1,0 +1,120 @@
+[
+  {
+    "name": "3D-Cube",
+    "description": "Projecting 3D vertices onto a 2D screen from scratch, plus a tutorial on the math.",
+    "homepage": "https://projection.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/3D-Cube",
+    "topics": [
+      "canvas",
+      "javascript",
+      "portfolio",
+      "simulation"
+    ],
+    "language": "HTML",
+    "created": "2024-08-17"
+  },
+  {
+    "name": "arduino-parkour",
+    "description": "A wall-dodging game on a 16×2 LCD with a joystick. You can play a simulation of it in the browser.",
+    "homepage": "https://parkour.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/arduino-parkour",
+    "topics": [
+      "ai",
+      "arduino",
+      "cpp",
+      "portfolio",
+      "simulation"
+    ],
+    "language": "C++",
+    "created": "2026-10-18"
+  },
+  {
+    "name": "daily-tracker",
+    "description": "A native desktop habit tracker with streaks, heatmaps and phone reminders.",
+    "homepage": "https://tracker.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/daily-tracker",
+    "topics": [
+      "ai",
+      "portfolio",
+      "rust",
+      "tauri",
+      "tools",
+      "typescript"
+    ],
+    "language": "TypeScript",
+    "created": "2026-10-18"
+  },
+  {
+    "name": "desmos-guide",
+    "description": "An interactive guide to solving SAT math problems with the Desmos calculator, with 100+ practice questions.",
+    "homepage": "https://desmos.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/desmos-guide",
+    "topics": [
+      "ai",
+      "for-students",
+      "nextjs",
+      "portfolio",
+      "tailwind"
+    ],
+    "language": "TypeScript",
+    "created": "2026-10-18"
+  },
+  {
+    "name": "final-grade-calculator",
+    "description": "Work out exactly what you need on your final to hit the grade you want.",
+    "homepage": "https://finalgrade.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/final-grade-calculator",
+    "topics": [
+      "for-students",
+      "html-css-js",
+      "portfolio"
+    ],
+    "language": "CSS",
+    "created": "2024-12-15"
+  },
+  {
+    "name": "lloyd",
+    "description": "Lloyd-Max Voronoi relaxation: watch points spread themselves out evenly, live in the browser.",
+    "homepage": "https://lloyd.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/lloyd",
+    "topics": [
+      "canvas",
+      "javascript",
+      "portfolio",
+      "simulation"
+    ],
+    "language": "JavaScript",
+    "created": "2025-04-19"
+  },
+  {
+    "name": "SphericalVoronoi",
+    "description": "Interactive Voronoi diagrams on the surface of a sphere.",
+    "homepage": "https://voronoi.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/SphericalVoronoi",
+    "topics": [
+      "canvas",
+      "javascript",
+      "portfolio",
+      "portfolio-featured",
+      "simulation"
+    ],
+    "language": "JavaScript",
+    "created": "2026-02-15"
+  },
+  {
+    "name": "tab-teacher",
+    "description": "A practice app for learning guitar solos.",
+    "homepage": "https://tab.eitanalperstein.com",
+    "url": "https://github.com/Eitan-Alperstein/tab-teacher",
+    "topics": [
+      "ai",
+      "portfolio",
+      "portfolio-featured",
+      "tools",
+      "typescript",
+      "vite"
+    ],
+    "language": "TypeScript",
+    "created": "2026-10-18"
+  }
+]

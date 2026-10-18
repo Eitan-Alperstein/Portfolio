@@ -8,7 +8,8 @@
         "build": "astro build",
         "preview": "astro preview",
         "shots": "node scripts/shots.mjs",
-        "voices": "node scripts/voices.mjs"
+        "voices": "node scripts/voices.mjs",
+        "sync-projects": "node scripts/sync-projects.mjs"
     },
     "engines": {
         "node": "24.x"

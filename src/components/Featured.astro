@@ -1,13 +1,14 @@
 ---
-import projects from "../data/projects.json";
+import { featured } from "../lib/projects";
 import Tags from "./Tags.astro";
 import Links from "./Links.astro";
 import PaperArt from "./art/PaperArt.astro";
 import TabArt from "./art/TabArt.astro";
 import SphereArt from "./art/SphereArt.astro";
+import GenericArt from "./art/GenericArt.astro";
 
 const art = { "the-paw": PaperArt, "tab-teacher": TabArt, "spherical-voronoi": SphereArt } as const;
-const hero = projects.filter((p) => p.hero).sort((a, b) => a.hero! - b.hero!);
+const hero = featured;
 ---
 <section id="code" class="wrap">
   <p class="eyebrow" data-reveal>Code</p>
@@ -15,10 +16,10 @@ const hero = projects.filter((p) => p.hero).sort((a, b) => a.hero! - b.hero!);
 
   <div class="featured">
     {hero.map((p, i) => {
-      const Art = art[p.slug as keyof typeof art];
+      const Art = p.slug ? art[p.slug as keyof typeof art] : undefined;
       return (
         <article class={`card c${i}`} data-reveal style={`--d: ${i * 90}ms`}>
-          <div class="visual"><Art /></div>
+          <div class="visual">{Art ? <Art /> : <GenericArt title={p.title} />}</div>
           <div class="body">
             <p class="num">0{i + 1}</p>
             <h3>{p.title}</h3>

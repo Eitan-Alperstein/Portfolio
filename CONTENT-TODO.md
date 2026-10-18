@@ -9,6 +9,8 @@ Two ways content gets in:
 
 After either, run `npm run build` to check it, then commit and push (see README.md for the deploy flow).
 
+> **Adding a code project?** That isn't a content slot: tag the GitHub repo and it appears automatically. See **How to add a project** in README.md.
+
 ## Image slots
 
 | Slot | Where it shows | Put files in | Notes |

@@ -1,9 +1,9 @@
 ---
 import Showcase from "../layouts/Showcase.astro";
 import Gallery from "../components/Gallery.astro";
-import projects from "../data/projects.json";
+import { project } from "../lib/projects";
 
-const p = projects.find((x) => x.title === "Daily Tracker")!;
+const p = project("daily-tracker");
 ---
 <Showcase
   title="Daily Tracker"

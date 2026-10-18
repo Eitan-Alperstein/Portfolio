@@ -1,9 +1,9 @@
 ---
 import Showcase from "../layouts/Showcase.astro";
 import Gallery from "../components/Gallery.astro";
-import projects from "../data/projects.json";
+import { project } from "../lib/projects";
 
-const p = projects.find((x) => x.title === "Arduino Parkour")!;
+const p = project("arduino-parkour");
 
 // The 8 custom characters, built exactly like buildChar() in parkour_game.ino:
 // glyph i has the ball if bit 2 is set, the upper wall if bit 1, the lower wall if bit 0.

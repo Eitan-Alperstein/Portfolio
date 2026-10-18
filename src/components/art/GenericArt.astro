@@ -1,0 +1,18 @@
+---
+// Fallback artwork for a featured project without its own (no `slug` art):
+// a small Voronoi pattern seeded from the title, with the title on top.
+import { Delaunay } from "d3-delaunay";
+
+interface Props { title: string }
+const { title } = Astro.props;
+let s = [...title].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 2147483647, 7) || 7;
+const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+const pts: [number, number][] = Array.from({ length: 28 }, () => [20 + rand() * 360, 20 + rand() * 260]);
+const vor = Delaunay.from(pts).voronoi([0, 0, 400, 300]);
+const lit = Math.floor(rand() * pts.length);
+---
+<svg viewBox="0 0 400 300" class="art" aria-hidden="true">
+  {pts.map((_, i) => <path d={vor.renderCell(i)} fill={i === lit ? "rgba(159,177,255,0.16)" : "none"} stroke="rgba(220,226,255,0.16)" />)}
+  {pts.map(([x, y]) => <circle cx={x} cy={y} r="1.6" fill="#eceef2" opacity="0.5" />)}
+  <text x="200" y="158" text-anchor="middle" fill="#eceef2" font-family="Inter Variable, sans-serif" font-size="28" font-weight="650" letter-spacing="-0.5">{title}</text>
+</svg>

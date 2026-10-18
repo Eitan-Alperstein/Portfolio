@@ -1,0 +1,101 @@
+{
+  "_readme": "Overrides for the auto-synced project list. See README.md → 'How to add a project'.",
+  "order": [
+    "tab-teacher",
+    "the-paw",
+    "daily-tracker",
+    "the-forge",
+    "SphericalVoronoi",
+    "final-grade-calculator",
+    "3D-Cube",
+    "desmos-guide",
+    "reeltab",
+    "arduino-parkour",
+    "training-log",
+    "lloyd"
+  ],
+  "repos": {
+    "tab-teacher": {
+      "hero": 2,
+      "slug": "tab-teacher",
+      "long": "A practice app for learning guitar solos. Pick a song from the menu and work through the solo with the tab in front of you. Built because I wanted it for my own practicing."
+    },
+    "daily-tracker": {
+      "url": "/daily-tracker"
+    },
+    "SphericalVoronoi": {
+      "hero": 3,
+      "slug": "spherical-voronoi",
+      "long": "Voronoi diagrams, but on the surface of a sphere instead of a flat plane. Seed points split the globe into cells, each one holding everything closer to its seed than to any other."
+    },
+    "3D-Cube": {
+      "title": "3D Projection"
+    },
+    "desmos-guide": {
+      "title": "Desmos SAT Prep"
+    },
+    "arduino-parkour": {
+      "url": "/arduino-parkour"
+    },
+    "lloyd": {
+      "title": "Lloyd Relaxation"
+    }
+  },
+  "private": [
+    {
+      "id": "the-paw",
+      "title": "The Paw",
+      "blurb": "The website for Denver Jewish Day School's student newspaper, with a CMS so editors can publish without code.",
+      "stack": [
+        "Astro",
+        "Keystatic",
+        "TypeScript"
+      ],
+      "url": "https://thepawnews.com",
+      "group": "students",
+      "ai": true,
+      "hero": 1,
+      "slug": "the-paw",
+      "long": "The website for Denver Jewish Day School's student newspaper, which I created. Readers get a fast static site with sections, an archive with search, staff pages and an RSS feed. Editors get a CMS (Keystatic) so they can publish without touching code."
+    },
+    {
+      "id": "the-forge",
+      "title": "The Forge",
+      "blurb": "AP Lang essay practice with AI-generated prompts, AI grading, XP, badges and a global leaderboard.",
+      "stack": [
+        "JavaScript",
+        "Express",
+        "Postgres",
+        "AI"
+      ],
+      "url": "https://forge.eitanalperstein.com",
+      "group": "students",
+      "ai": true
+    },
+    {
+      "id": "reeltab",
+      "title": "ReelTab",
+      "blurb": "Native macOS app that turns guitar tab scrolling past in Reels/TikToks into an editable, playable tab.",
+      "stack": [
+        "Swift",
+        "macOS"
+      ],
+      "url": null,
+      "group": "mine",
+      "ai": true
+    },
+    {
+      "id": "training-log",
+      "title": "Training Log",
+      "blurb": "A mobile-first workout tracker that imports custom training programs.",
+      "stack": [
+        "Next.js",
+        "Supabase",
+        "Tailwind"
+      ],
+      "url": "https://gym-five-gold.vercel.app",
+      "group": "mine",
+      "ai": true
+    }
+  ]
+}
