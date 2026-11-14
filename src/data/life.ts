@@ -136,8 +136,6 @@ export interface Course {
 export const academics = {
   school: "Denver Jewish Day School",
   classOf: 2028,
-  // Total AP exams taken so far, including any not listed as a course below.
-  apExamsTaken: 7,
   years: [
     {
       label: "2026–27", grade: "Junior", current: true,

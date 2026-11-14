@@ -15,7 +15,7 @@ const kind = (name: string) => name.startsWith("AP ") ? "AP" : name.startsWith("
   <section class="wrap block">
     <div class="scores">
       <div class="big">
-        <b>{ap.fives}<span>/</span>{ap.taken}</b>
+        <b>{ap.fives}</b>
         <p>AP exams with a 5</p>
       </div>
       <div class="detail">
@@ -57,7 +57,6 @@ const kind = (name: string) => name.startsWith("AP ") ? "AP" : name.startsWith("
   .scores { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; border: 1px solid var(--line); border-radius: 24px; padding: 40px;
     background: radial-gradient(60% 100% at 0% 0%, rgba(159,177,255,0.14), transparent 60%), var(--bg-raised); }
   .big b { font-size: clamp(64px, 10vw, 110px); line-height: .9; letter-spacing: -0.06em; font-weight: 700; }
-  .big b span { color: var(--muted); font-weight: 400; margin: 0 4px; }
   .big p { margin: 10px 0 0; font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
   .sum { margin: 0 0 18px; font-size: 17px; color: var(--ink-soft); max-width: 600px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }

@@ -10,7 +10,6 @@ const join = (xs: string[]) => xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).
 
 export const ap = {
   fives: fiveCourses.length,
-  taken: Math.max(academics.apExamsTaken, listed.length),
   fiveCourses: ordered,
   shortList: join(ordered.map((c) => c.short ?? c.name.replace(/^AP /, ""))),
   longList: join(ordered.map((c) => c.name.replace(/^AP /, ""))),
